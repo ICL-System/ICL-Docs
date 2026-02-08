@@ -1,0 +1,15 @@
+[book]
+title = "Intent Contract Language (ICL)"
+authors = ["ICL-System Contributors"]
+description = "Documentation for the Intent Contract Language — a universal specification for intent contracts."
+language = "en"
+src = "src"
+
+[build]
+build-dir = "book"
+
+[output.html]
+default-theme = "light"
+preferred-dark-theme = "ayu"
+git-repository-url = "https://github.com/ICL-System/ICL-Docs"
+edit-url-template = "https://github.com/ICL-System/ICL-Docs/edit/main/{path}"
