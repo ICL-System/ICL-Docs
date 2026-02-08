@@ -97,7 +97,7 @@ ICL is in **active development**. The core pipeline is fully implemented:
 | Normalizer (canonical form + hashing) | Complete | 30+ tests |
 | Verifier (types, invariants, determinism, coherence) | Complete | 40+ tests |
 | Executor (sandbox + provenance logging) | Complete | 20+ tests |
-| CLI (9 commands) | Complete | 15+ tests |
+| CLI (9 commands) | Complete | 28 tests |
 | Python binding (PyO3) | Complete | 18 tests |
 | JavaScript binding (WASM) | Complete | 31 tests |
 | Go binding (cgo) | Complete | 16 tests |

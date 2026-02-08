@@ -129,7 +129,7 @@ All bindings wrap the same Rust core — they never reimplement logic:
 
 | Language | Technology | Package Name |
 |----------|-----------|--------------|
-| Python | PyO3 + maturin | `icl-runtime` on [PyPI](https://pypi.org/project/icl-runtime/) |
+| Python | PyO3 + maturin | `icl-runtime` on [PyPI](https://pypi.org/project/icl-runtime/) (published on `v*` tag) |
 | JavaScript | wasm-bindgen + wasm-pack | `icl-runtime` (local build; npm publish on `v*` tag) |
 | Go | cgo + cbindgen | `github.com/ICL-System/ICL-Runtime/bindings/go` |
 

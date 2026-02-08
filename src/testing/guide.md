@@ -172,7 +172,7 @@ for i := 0; i < 100; i++ {
 | Normalizer (canonical form + hashing) | ~30 | Yes (idempotence + 100-iter) |
 | Verifier (types + invariants + determinism + coherence) | ~40 | Yes |
 | Executor (sandbox + provenance) | ~20 | Yes |
-| CLI (all 9 commands) | ~15 | — |
+| CLI (all 9 commands) | 28 | — |
 | Python binding | 18 | Yes (100-iter) |
 | JavaScript binding | 31 | Yes (100-iter) |
 | Go binding | 16 | Yes (100-iter) |
