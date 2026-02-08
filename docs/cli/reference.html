@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "ayu";
-            window.path_to_searchindex_js = "../searchindex-0ce63efd.js";
+            window.path_to_searchindex_js = "../searchindex-218985da.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d7ba209e.js"></script>
@@ -203,12 +203,12 @@ cargo install --path crates/icl-cli
 </table>
 </div>
 <hr>
-<h2 id="icl-validate-file"><a class="header" href="#icl-validate-file"><code>icl validate &lt;file&gt;</code></a></h2>
+<h2 id="icl-cli-validate-file"><a class="header" href="#icl-cli-validate-file"><code>icl-cli validate &lt;file&gt;</code></a></h2>
 <p>Check syntax and types. Parses the contract and runs the verifier.</p>
-<pre><code class="language-bash">icl validate contract.icl
+<pre><code class="language-bash">icl-cli validate contract.icl
 # ✓ contract.icl is valid
 
-icl validate contract.icl --json
+icl-cli validate contract.icl --json
 # {"file":"contract.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
 </code></pre>
 <p><strong>Options:</strong></p>
@@ -225,19 +225,19 @@ icl validate contract.icl --json
 </div>
 <p><strong>Exit codes:</strong> <code>0</code> = valid, <code>1</code> = invalid, <code>2</code> = file error</p>
 <hr>
-<h2 id="icl-normalize-file"><a class="header" href="#icl-normalize-file"><code>icl normalize &lt;file&gt;</code></a></h2>
+<h2 id="icl-cli-normalize-file"><a class="header" href="#icl-cli-normalize-file"><code>icl-cli normalize &lt;file&gt;</code></a></h2>
 <p>Output the canonical form. Sections are sorted alphabetically, fields are sorted within sections, comments are stripped, and the semantic hash is recomputed.</p>
-<pre><code class="language-bash">icl normalize contract.icl
+<pre><code class="language-bash">icl-cli normalize contract.icl
 # Prints canonical form to stdout
 </code></pre>
 <p>Normalization is idempotent: <code>normalize(normalize(x)) == normalize(x)</code>.</p>
 <hr>
-<h2 id="icl-verify-file"><a class="header" href="#icl-verify-file"><code>icl verify &lt;file&gt;</code></a></h2>
+<h2 id="icl-cli-verify-file"><a class="header" href="#icl-cli-verify-file"><code>icl-cli verify &lt;file&gt;</code></a></h2>
 <p>Full verification — type checking, invariant consistency, determinism analysis, and coherence verification.</p>
-<pre><code class="language-bash">icl verify contract.icl
+<pre><code class="language-bash">icl-cli verify contract.icl
 # ✓ contract.icl verified successfully
 
-icl verify contract.icl --json
+icl-cli verify contract.icl --json
 # {"file":"contract.icl","verified":true,...}
 </code></pre>
 <p><strong>Options:</strong></p>
@@ -261,22 +261,22 @@ icl verify contract.icl --json
 <li>Resource limits are feasible</li>
 </ul>
 <hr>
-<h2 id="icl-fmt-file"><a class="header" href="#icl-fmt-file"><code>icl fmt &lt;file&gt;</code></a></h2>
+<h2 id="icl-cli-fmt-file"><a class="header" href="#icl-cli-fmt-file"><code>icl-cli fmt &lt;file&gt;</code></a></h2>
 <p>Format a contract to standard style (equivalent to normalize, written back to file or stdout).</p>
-<pre><code class="language-bash">icl fmt contract.icl
+<pre><code class="language-bash">icl-cli fmt contract.icl
 # Prints formatted contract
 </code></pre>
 <hr>
-<h2 id="icl-hash-file"><a class="header" href="#icl-hash-file"><code>icl hash &lt;file&gt;</code></a></h2>
+<h2 id="icl-cli-hash-file"><a class="header" href="#icl-cli-hash-file"><code>icl-cli hash &lt;file&gt;</code></a></h2>
 <p>Compute the SHA-256 semantic hash of a contract.</p>
-<pre><code class="language-bash">icl hash contract.icl
+<pre><code class="language-bash">icl-cli hash contract.icl
 # 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
 </code></pre>
 <p>The hash is computed from the canonical (normalized) form. Two contracts with the same semantics produce the same hash, regardless of formatting or comments.</p>
 <hr>
-<h2 id="icl-diff-file_a-file_b"><a class="header" href="#icl-diff-file_a-file_b"><code>icl diff &lt;file_a&gt; &lt;file_b&gt;</code></a></h2>
+<h2 id="icl-cli-diff-file_a-file_b"><a class="header" href="#icl-cli-diff-file_a-file_b"><code>icl-cli diff &lt;file_a&gt; &lt;file_b&gt;</code></a></h2>
 <p>Semantic diff between two contracts. Both contracts are normalized first, then compared field by field.</p>
-<pre><code class="language-bash">icl diff v1.icl v2.icl
+<pre><code class="language-bash">icl-cli diff v1.icl v2.icl
 # --- v1.icl (canonical)
 # +++ v2.icl (canonical)
 #   Contract {
@@ -286,19 +286,19 @@ icl verify contract.icl --json
 #       ...
 </code></pre>
 <hr>
-<h2 id="icl-init-name"><a class="header" href="#icl-init-name"><code>icl init [name]</code></a></h2>
+<h2 id="icl-cli-init-name"><a class="header" href="#icl-cli-init-name"><code>icl-cli init [name]</code></a></h2>
 <p>Scaffold a new ICL contract with all required sections.</p>
-<pre><code class="language-bash">icl init my-contract
+<pre><code class="language-bash">icl-cli init my-contract
 # ✓ created my-contract.icl
 
-icl init
+icl-cli init
 # ✓ created my-contract.icl  (default name)
 </code></pre>
 <p>The generated template includes all required sections with placeholder values — ready to fill in.</p>
 <hr>
-<h2 id="icl-execute-file---input-json"><a class="header" href="#icl-execute-file---input-json"><code>icl execute &lt;file&gt; --input &lt;json&gt;</code></a></h2>
+<h2 id="icl-cli-execute-file---input-json"><a class="header" href="#icl-cli-execute-file---input-json"><code>icl-cli execute &lt;file&gt; --input &lt;json&gt;</code></a></h2>
 <p>Run a contract with JSON inputs in a sandboxed environment.</p>
-<pre><code class="language-bash">icl execute contract.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+<pre><code class="language-bash">icl-cli execute contract.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
 # ✓ contract.icl executed successfully
 #   Operations: 1
 #   Provenance entries: 1
@@ -322,10 +322,10 @@ icl init
 </ul>
 <p>Execution enforces resource limits (memory, time, state size) and logs all state changes in the provenance log.</p>
 <hr>
-<h2 id="icl-version"><a class="header" href="#icl-version"><code>icl version</code></a></h2>
+<h2 id="icl-cli-version"><a class="header" href="#icl-cli-version"><code>icl-cli version</code></a></h2>
 <p>Show version information.</p>
-<pre><code class="language-bash">icl version
-# icl 0.1.0 (icl-core 0.1.0)
+<pre><code class="language-bash">icl-cli version
+# icl-cli 0.1.0 (icl-core 0.1.0)
 # Phases complete: Parser, Normalizer, Verifier, CLI
 </code></pre>
 <hr>
@@ -346,10 +346,10 @@ icl init
 <h2 id="ci-integration"><a class="header" href="#ci-integration">CI Integration</a></h2>
 <p>Use <code>--quiet</code> and <code>--json</code> for CI pipelines:</p>
 <pre><code class="language-bash"># Fail the build if any contract is invalid
-icl validate contracts/*.icl --quiet
+icl-cli validate contracts/*.icl --quiet
 
 # Get machine-readable results
-icl verify contract.icl --json | jq '.verified'
+icl-cli verify contract.icl --json | jq '.verified'
 </code></pre>
 
                     </main>

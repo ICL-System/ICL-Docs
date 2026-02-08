@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "ayu";
-            window.path_to_searchindex_js = "searchindex-0ce63efd.js";
+            window.path_to_searchindex_js = "searchindex-218985da.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d7ba209e.js"></script>
@@ -196,10 +196,14 @@ cargo install --path crates/icl-cli
 <p>The Python package is published on <a href="https://test.pypi.org/project/icl-runtime/">test.pypi.org</a> during development.</p>
 </blockquote>
 <h3 id="javascript--nodejs"><a class="header" href="#javascript--nodejs">JavaScript / Node.js</a></h3>
-<p>Build from source with wasm-pack:</p>
+<pre><code class="language-bash">npm install icl-runtime
+</code></pre>
+<blockquote>
+<p>Not yet published to npm. During development, build from source:</p>
 <pre><code class="language-bash">cd ICL-Runtime/bindings/javascript
 wasm-pack build --target nodejs
 </code></pre>
+</blockquote>
 <h3 id="go"><a class="header" href="#go">Go</a></h3>
 <pre><code class="language-bash">cd ICL-Runtime/bindings/go/ffi
 cargo build --release
@@ -207,7 +211,7 @@ cargo build --release
 <p>Then import the Go module from <code>bindings/go/</code>.</p>
 <h2 id="create-your-first-contract"><a class="header" href="#create-your-first-contract">Create Your First Contract</a></h2>
 <p>Scaffold a new contract:</p>
-<pre><code class="language-bash">icl init hello
+<pre><code class="language-bash">icl-cli init hello
 # ✓ created hello.icl
 </code></pre>
 <p>Or create <code>hello.icl</code> manually:</p>
@@ -263,39 +267,39 @@ cargo build --release
 </code></pre>
 <h2 id="validate"><a class="header" href="#validate">Validate</a></h2>
 <p>Check that the contract parses correctly:</p>
-<pre><code class="language-bash">icl validate hello.icl
+<pre><code class="language-bash">icl-cli validate hello.icl
 # ✓ hello.icl is valid
 </code></pre>
 <p>Get machine-readable output with <code>--json</code>:</p>
-<pre><code class="language-bash">icl validate hello.icl --json
+<pre><code class="language-bash">icl-cli validate hello.icl --json
 # {"file":"hello.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
 </code></pre>
 <h2 id="verify"><a class="header" href="#verify">Verify</a></h2>
 <p>Run full verification — types, invariants, determinism, and coherence:</p>
-<pre><code class="language-bash">icl verify hello.icl
+<pre><code class="language-bash">icl-cli verify hello.icl
 # ✓ hello.icl verified successfully
 </code></pre>
 <h2 id="normalize"><a class="header" href="#normalize">Normalize</a></h2>
 <p>Get the canonical form (sorted sections, sorted fields, computed hash):</p>
-<pre><code class="language-bash">icl normalize hello.icl
+<pre><code class="language-bash">icl-cli normalize hello.icl
 </code></pre>
 <p>The normalizer produces a deterministic output — running it twice always gives the same result.</p>
 <h2 id="compute-hash"><a class="header" href="#compute-hash">Compute Hash</a></h2>
 <p>Get the SHA-256 semantic hash:</p>
-<pre><code class="language-bash">icl hash hello.icl
+<pre><code class="language-bash">icl-cli hash hello.icl
 # 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
 </code></pre>
 <p>Two contracts with the same semantics always produce the same hash, regardless of formatting or comment differences.</p>
 <h2 id="execute"><a class="header" href="#execute">Execute</a></h2>
 <p>Run a contract with inputs:</p>
-<pre><code class="language-bash">icl execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+<pre><code class="language-bash">icl-cli execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
 # ✓ hello.icl executed successfully
 #   Operations: 1
 #   Provenance entries: 1
 </code></pre>
 <h2 id="compare-contracts"><a class="header" href="#compare-contracts">Compare Contracts</a></h2>
 <p>Semantic diff between two contracts:</p>
-<pre><code class="language-bash">icl diff v1.icl v2.icl
+<pre><code class="language-bash">icl-cli diff v1.icl v2.icl
 # Shows field-by-field differences in canonical form
 </code></pre>
 <h2 id="using-from-python"><a class="header" href="#using-from-python">Using from Python</a></h2>

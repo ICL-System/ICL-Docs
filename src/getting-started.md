@@ -22,12 +22,16 @@ pip install icl-runtime
 
 ### JavaScript / Node.js
 
-Build from source with wasm-pack:
-
 ```bash
-cd ICL-Runtime/bindings/javascript
-wasm-pack build --target nodejs
+npm install icl-runtime
 ```
+
+> Not yet published to npm. During development, build from source:
+>
+> ```bash
+> cd ICL-Runtime/bindings/javascript
+> wasm-pack build --target nodejs
+> ```
 
 ### Go
 
@@ -43,7 +47,7 @@ Then import the Go module from `bindings/go/`.
 Scaffold a new contract:
 
 ```bash
-icl init hello
+icl-cli init hello
 # ✓ created hello.icl
 ```
 
@@ -106,14 +110,14 @@ Contract {
 Check that the contract parses correctly:
 
 ```bash
-icl validate hello.icl
+icl-cli validate hello.icl
 # ✓ hello.icl is valid
 ```
 
 Get machine-readable output with `--json`:
 
 ```bash
-icl validate hello.icl --json
+icl-cli validate hello.icl --json
 # {"file":"hello.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
 ```
 
@@ -122,7 +126,7 @@ icl validate hello.icl --json
 Run full verification — types, invariants, determinism, and coherence:
 
 ```bash
-icl verify hello.icl
+icl-cli verify hello.icl
 # ✓ hello.icl verified successfully
 ```
 
@@ -131,7 +135,7 @@ icl verify hello.icl
 Get the canonical form (sorted sections, sorted fields, computed hash):
 
 ```bash
-icl normalize hello.icl
+icl-cli normalize hello.icl
 ```
 
 The normalizer produces a deterministic output — running it twice always gives the same result.
@@ -141,7 +145,7 @@ The normalizer produces a deterministic output — running it twice always gives
 Get the SHA-256 semantic hash:
 
 ```bash
-icl hash hello.icl
+icl-cli hash hello.icl
 # 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
 ```
 
@@ -152,7 +156,7 @@ Two contracts with the same semantics always produce the same hash, regardless o
 Run a contract with inputs:
 
 ```bash
-icl execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+icl-cli execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
 # ✓ hello.icl executed successfully
 #   Operations: 1
 #   Provenance entries: 1
@@ -163,7 +167,7 @@ icl execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}
 Semantic diff between two contracts:
 
 ```bash
-icl diff v1.icl v2.icl
+icl-cli diff v1.icl v2.icl
 # Shows field-by-field differences in canonical form
 ```
 

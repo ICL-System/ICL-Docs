@@ -21,15 +21,15 @@ cargo install --path crates/icl-cli
 
 ---
 
-## `icl validate <file>`
+## `icl-cli validate <file>`
 
 Check syntax and types. Parses the contract and runs the verifier.
 
 ```bash
-icl validate contract.icl
+icl-cli validate contract.icl
 # ✓ contract.icl is valid
 
-icl validate contract.icl --json
+icl-cli validate contract.icl --json
 # {"file":"contract.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
 ```
 
@@ -44,12 +44,12 @@ icl validate contract.icl --json
 
 ---
 
-## `icl normalize <file>`
+## `icl-cli normalize <file>`
 
 Output the canonical form. Sections are sorted alphabetically, fields are sorted within sections, comments are stripped, and the semantic hash is recomputed.
 
 ```bash
-icl normalize contract.icl
+icl-cli normalize contract.icl
 # Prints canonical form to stdout
 ```
 
@@ -57,15 +57,15 @@ Normalization is idempotent: `normalize(normalize(x)) == normalize(x)`.
 
 ---
 
-## `icl verify <file>`
+## `icl-cli verify <file>`
 
 Full verification — type checking, invariant consistency, determinism analysis, and coherence verification.
 
 ```bash
-icl verify contract.icl
+icl-cli verify contract.icl
 # ✓ contract.icl verified successfully
 
-icl verify contract.icl --json
+icl-cli verify contract.icl --json
 # {"file":"contract.icl","verified":true,...}
 ```
 
@@ -85,23 +85,23 @@ The verifier checks:
 
 ---
 
-## `icl fmt <file>`
+## `icl-cli fmt <file>`
 
 Format a contract to standard style (equivalent to normalize, written back to file or stdout).
 
 ```bash
-icl fmt contract.icl
+icl-cli fmt contract.icl
 # Prints formatted contract
 ```
 
 ---
 
-## `icl hash <file>`
+## `icl-cli hash <file>`
 
 Compute the SHA-256 semantic hash of a contract.
 
 ```bash
-icl hash contract.icl
+icl-cli hash contract.icl
 # 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
 ```
 
@@ -109,12 +109,12 @@ The hash is computed from the canonical (normalized) form. Two contracts with th
 
 ---
 
-## `icl diff <file_a> <file_b>`
+## `icl-cli diff <file_a> <file_b>`
 
 Semantic diff between two contracts. Both contracts are normalized first, then compared field by field.
 
 ```bash
-icl diff v1.icl v2.icl
+icl-cli diff v1.icl v2.icl
 # --- v1.icl (canonical)
 # +++ v2.icl (canonical)
 #   Contract {
@@ -126,15 +126,15 @@ icl diff v1.icl v2.icl
 
 ---
 
-## `icl init [name]`
+## `icl-cli init [name]`
 
 Scaffold a new ICL contract with all required sections.
 
 ```bash
-icl init my-contract
+icl-cli init my-contract
 # ✓ created my-contract.icl
 
-icl init
+icl-cli init
 # ✓ created my-contract.icl  (default name)
 ```
 
@@ -142,12 +142,12 @@ The generated template includes all required sections with placeholder values �
 
 ---
 
-## `icl execute <file> --input <json>`
+## `icl-cli execute <file> --input <json>`
 
 Run a contract with JSON inputs in a sandboxed environment.
 
 ```bash
-icl execute contract.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+icl-cli execute contract.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
 # ✓ contract.icl executed successfully
 #   Operations: 1
 #   Provenance entries: 1
@@ -168,13 +168,13 @@ Execution enforces resource limits (memory, time, state size) and logs all state
 
 ---
 
-## `icl version`
+## `icl-cli version`
 
 Show version information.
 
 ```bash
-icl version
-# icl 0.1.0 (icl-core 0.1.0)
+icl-cli version
+# icl-cli 0.1.0 (icl-core 0.1.0)
 # Phases complete: Parser, Normalizer, Verifier, CLI
 ```
 
@@ -196,8 +196,8 @@ Use `--quiet` and `--json` for CI pipelines:
 
 ```bash
 # Fail the build if any contract is invalid
-icl validate contracts/*.icl --quiet
+icl-cli validate contracts/*.icl --quiet
 
 # Get machine-readable results
-icl verify contract.icl --json | jq '.verified'
+icl-cli verify contract.icl --json | jq '.verified'
 ```

@@ -42,9 +42,9 @@ Identity {
 | `version` | Integer | Monotonically increasing version number |
 | `created_timestamp` | ISO8601 | When this version was created |
 | `owner` | String | Author or maintainer |
-| `semantic_hash` | String | SHA-256 hash of canonical form (auto-computed by `icl normalize`) |
+| `semantic_hash` | String | SHA-256 hash of canonical form (auto-computed by `icl-cli normalize`) |
 
-> The `semantic_hash` is automatically recomputed when you run `icl normalize`. You can use a placeholder during authoring.
+> The `semantic_hash` is automatically recomputed when you run `icl-cli normalize`. You can use a placeholder during authoring.
 
 ---
 
@@ -333,10 +333,10 @@ Contract {
 Validate it:
 
 ```bash
-icl validate db-write.icl
+icl-cli validate db-write.icl
 # ✓ db-write.icl is valid
 
-icl verify db-write.icl
+icl-cli verify db-write.icl
 # ✓ db-write.icl verified successfully
 ```
 

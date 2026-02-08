@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "ayu";
-            window.path_to_searchindex_js = "searchindex-0ce63efd.js";
+            window.path_to_searchindex_js = "searchindex-218985da.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d7ba209e.js"></script>
@@ -217,12 +217,12 @@
 <tr><td><code>version</code></td><td>Integer</td><td>Monotonically increasing version number</td></tr>
 <tr><td><code>created_timestamp</code></td><td>ISO8601</td><td>When this version was created</td></tr>
 <tr><td><code>owner</code></td><td>String</td><td>Author or maintainer</td></tr>
-<tr><td><code>semantic_hash</code></td><td>String</td><td>SHA-256 hash of canonical form (auto-computed by <code>icl normalize</code>)</td></tr>
+<tr><td><code>semantic_hash</code></td><td>String</td><td>SHA-256 hash of canonical form (auto-computed by <code>icl-cli normalize</code>)</td></tr>
 </tbody>
 </table>
 </div>
 <blockquote>
-<p>The <code>semantic_hash</code> is automatically recomputed when you run <code>icl normalize</code>. You can use a placeholder during authoring.</p>
+<p>The <code>semantic_hash</code> is automatically recomputed when you run <code>icl-cli normalize</code>. You can use a placeholder during authoring.</p>
 </blockquote>
 <hr>
 <h2 id="purposestatement"><a class="header" href="#purposestatement">PurposeStatement</a></h2>
@@ -502,10 +502,10 @@ Contract {
 }
 </code></pre>
 <p>Validate it:</p>
-<pre><code class="language-bash">icl validate db-write.icl
+<pre><code class="language-bash">icl-cli validate db-write.icl
 # ✓ db-write.icl is valid
 
-icl verify db-write.icl
+icl-cli verify db-write.icl
 # ✓ db-write.icl verified successfully
 </code></pre>
 <h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
