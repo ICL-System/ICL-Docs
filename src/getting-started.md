@@ -1,12 +1,10 @@
 # Quick Start
 
-> **Note**: ICL is in early development. The CLI and runtime are scaffolded but not yet functional. This guide shows where things are headed.
+Get up and running with ICL in under 5 minutes.
 
-## Prerequisites
+## Install the CLI
 
-- [Rust 1.75+](https://www.rust-lang.org/tools/install) (for building from source)
-
-## Install the CLI (from source)
+### From Source (Rust)
 
 ```bash
 git clone https://github.com/ICL-System/ICL-Runtime.git
@@ -14,67 +12,233 @@ cd ICL-Runtime
 cargo install --path crates/icl-cli
 ```
 
-## Your First Contract
+### Python
 
-Create a file called `hello.icl`:
+```bash
+pip install icl-runtime
+```
+
+> The Python package is published on [test.pypi.org](https://test.pypi.org/project/icl-runtime/) during development.
+
+### JavaScript / Node.js
+
+Build from source with wasm-pack:
+
+```bash
+cd ICL-Runtime/bindings/javascript
+wasm-pack build --target nodejs
+```
+
+### Go
+
+```bash
+cd ICL-Runtime/bindings/go/ffi
+cargo build --release
+```
+
+Then import the Go module from `bindings/go/`.
+
+## Create Your First Contract
+
+Scaffold a new contract:
+
+```bash
+icl init hello
+# ✓ created hello.icl
+```
+
+Or create `hello.icl` manually:
 
 ```
 Contract {
   Identity {
-    stable_id: "hello-world-001"
-    version: 1
-    created_timestamp: "2025-01-01T00:00:00Z"
-    owner: "your-name"
-    semantic_hash: "placeholder"
+    stable_id: "ic-hello-001",
+    version: 1,
+    created_timestamp: 2026-02-01T10:00:00Z,
+    owner: "developer",
+    semantic_hash: "e5f6a7b8c9d0"
   }
   PurposeStatement {
-    narrative: "A simple greeting contract"
-    intent_source: "human_authored"
+    narrative: "Simple contract that echoes input messages",
+    intent_source: "tutorial",
     confidence_level: 1.0
   }
   DataSemantics {
     state: {
-      greeting: String = "Hello, World!"
-    }
+      message: String,
+      count: Integer = 0
+    },
     invariants: [
-      "greeting.length > 0"
+      "message is not empty",
+      "count >= 0"
     ]
   }
   BehavioralSemantics {
-    operations: []
+    operations: [{
+      name: "echo",
+      precondition: "input_provided",
+      parameters: { message: String },
+      postcondition: "state_updated_with_message",
+      side_effects: ["log_operation"],
+      idempotence: "idempotent"
+    }]
   }
   ExecutionConstraints {
-    trigger_types: ["manual"]
+    trigger_types: ["manual"],
     resource_limits: {
-      max_memory_bytes: 1048576
-      computation_timeout_ms: 1000
-      max_state_size_bytes: 65536
-    }
-    external_permissions: []
-    sandbox_mode: "strict"
+      max_memory_bytes: 1048576,
+      computation_timeout_ms: 100,
+      max_state_size_bytes: 1048576
+    },
+    external_permissions: [],
+    sandbox_mode: "full_isolation"
   }
   HumanMachineContract {
-    system_commitments: ["Always produce a greeting"]
-    system_refusals: ["Will not produce empty output"]
-    user_obligations: []
+    system_commitments: ["All messages are echoed"],
+    system_refusals: ["Will not modify past messages"],
+    user_obligations: ["May provide new messages"]
   }
 }
 ```
 
-## Validate (once implemented)
+## Validate
+
+Check that the contract parses correctly:
 
 ```bash
 icl validate hello.icl
 # ✓ hello.icl is valid
+```
 
+Get machine-readable output with `--json`:
+
+```bash
+icl validate hello.icl --json
+# {"file":"hello.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
+```
+
+## Verify
+
+Run full verification — types, invariants, determinism, and coherence:
+
+```bash
 icl verify hello.icl
-# ✓ Types OK
-# ✓ Invariants consistent
-# ✓ Determinism verified
+# ✓ hello.icl verified successfully
+```
+
+## Normalize
+
+Get the canonical form (sorted sections, sorted fields, computed hash):
+
+```bash
+icl normalize hello.icl
+```
+
+The normalizer produces a deterministic output — running it twice always gives the same result.
+
+## Compute Hash
+
+Get the SHA-256 semantic hash:
+
+```bash
+icl hash hello.icl
+# 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
+```
+
+Two contracts with the same semantics always produce the same hash, regardless of formatting or comment differences.
+
+## Execute
+
+Run a contract with inputs:
+
+```bash
+icl execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+# ✓ hello.icl executed successfully
+#   Operations: 1
+#   Provenance entries: 1
+```
+
+## Compare Contracts
+
+Semantic diff between two contracts:
+
+```bash
+icl diff v1.icl v2.icl
+# Shows field-by-field differences in canonical form
+```
+
+## Using from Python
+
+```python
+import icl
+
+# Parse
+result = icl.parse_contract(open("hello.icl").read())
+print(result)  # JSON string of the parsed contract
+
+# Normalize
+canonical = icl.normalize(open("hello.icl").read())
+
+# Verify
+issues = icl.verify(open("hello.icl").read())
+
+# Execute
+output = icl.execute(
+    open("hello.icl").read(),
+    '{"operation":"echo","inputs":{"message":"Hello"}}'
+)
+
+# Semantic hash
+hash_val = icl.semantic_hash(open("hello.icl").read())
+```
+
+## Using from JavaScript
+
+```javascript
+const icl = require('./path-to/pkg/icl_wasm.js');
+
+// Parse
+const result = icl.parseContract(contractText);
+
+// Normalize
+const canonical = icl.normalize(contractText);
+
+// Verify
+const issues = icl.verify(contractText);
+
+// Execute
+const output = icl.execute(contractText, '{"operation":"echo","inputs":{"message":"Hello"}}');
+
+// Semantic hash
+const hash = icl.semanticHash(contractText);
+```
+
+## Using from Go
+
+```go
+package main
+
+import (
+    icl "github.com/ICL-System/ICL-Runtime/bindings/go"
+    "fmt"
+)
+
+func main() {
+    contract := `Contract { ... }` // your ICL text
+
+    result, err := icl.ParseContract(contract)
+    if err != nil { panic(err) }
+    fmt.Println(result)
+
+    canonical, _ := icl.Normalize(contract)
+    hash, _ := icl.SemanticHash(contract)
+    fmt.Println(canonical, hash)
+}
 ```
 
 ## Next Steps
 
-- [Writing Contracts](writing-contracts.md) — learn the full ICL syntax
-- [Specification Overview](specification/overview.md) — understand the formal model
-- [CLI Reference](cli/reference.md) — all available commands
+- [Writing Contracts](writing-contracts.md) — learn the full ICL syntax and type system
+- [CLI Reference](cli/reference.md) — all 9 CLI commands
+- [Specification Overview](specification/overview.md) — the formal model
+- [Architecture](runtime/architecture.md) — how the runtime works

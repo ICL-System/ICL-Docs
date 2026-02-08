@@ -4,7 +4,7 @@ The ICL specification is maintained in the [ICL-Spec](https://github.com/ICL-Sys
 
 ## Core Sections
 
-An ICL contract consists of 7 sections:
+An ICL contract consists of 7 sections (6 required, 1 optional):
 
 1. **Identity** — Stable ID, version, timestamp, owner, semantic hash
 2. **PurposeStatement** — Narrative description, intent source, confidence level

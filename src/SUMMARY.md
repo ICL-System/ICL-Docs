@@ -5,7 +5,7 @@
 # Getting Started
 
 - [Quick Start](getting-started.md)
-- [Writing Your First Contract](writing-contracts.md)
+- [Writing Contracts](writing-contracts.md)
 
 # The Specification
 
@@ -21,10 +21,10 @@
 
 - [CLI Reference](cli/reference.md)
 
+# Language Bindings
+
+- [Integration Overview](integrations/overview.md)
+
 # Testing
 
 - [Testing Guide](testing/guide.md)
-
-# Integrations
-
-- [Integration Overview](integrations/overview.md)

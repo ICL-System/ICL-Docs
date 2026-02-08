@@ -1,73 +1,136 @@
-# Runtime Architecture
+# Architecture
 
-The ICL Runtime uses a pipeline architecture:
+The ICL Runtime processes contracts through a four-stage pipeline.
+
+## Pipeline
 
 ```
 ICL Text → Parser → AST → Normalizer → Canonical Form
-                           ↓
-                        Verifier → Type Check + Invariants + Determinism
-                           ↓
-                        Executor → Sandboxed Execution
+                            ↓
+                         Verifier → Type Check + Invariants + Determinism + Coherence
+                            ↓
+                         Executor → Sandboxed Execution + Provenance Logging
 ```
+
+Each stage is independent and can be used standalone.
+
+---
 
 ## Components
 
 ### Parser (`icl-core::parser`)
-Converts ICL text into an Abstract Syntax Tree (AST).
-- **Tokenizer**: Character-by-character scanning → token stream
-- **Parser**: Recursive descent → AST nodes
-- **Status**: Not yet implemented (Phase 1)
+
+Converts ICL text into a typed Abstract Syntax Tree (AST).
+
+- **Tokenizer** (`parser::tokenizer`): Character-by-character scanning produces a stream of typed tokens — keywords, identifiers, strings, integers, floats, ISO8601 timestamps, UUIDs, operators, and delimiters. Reports errors with line/column numbers.
+- **AST** (`parser::ast`): Defines all AST node types matching the BNF grammar — `ContractNode`, `IdentityNode`, `TypeExpression`, `OperationNode`, etc.
+- **Parser** (`parser::parse_contract`): Recursive descent parser. Handles all 7 contract sections, type expressions (primitives, composites, collections), and error recovery.
 
 ### Normalizer (`icl-core::normalizer`)
-Transforms contracts into canonical form for hashing and comparison.
-- Section sorting (alphabetical)
-- Field sorting within sections
-- Whitespace normalization
-- Comment removal
-- SHA-256 semantic hashing
-- **Status**: Stub — passes input through (Phase 2)
+
+Transforms contracts into a deterministic canonical form.
+
+- Sorts sections alphabetically
+- Sorts fields within each section
+- Strips all comments and normalizes whitespace
+- Expands type shorthands to full forms
+- Fills in defaults
+- Computes SHA-256 semantic hash of the canonical output
+- Guarantees idempotence: `normalize(normalize(x)) == normalize(x)`
 
 ### Verifier (`icl-core::verifier`)
-Validates contracts against the specification.
-- Type checking
-- Invariant consistency
-- Determinism verification
-- Precondition/postcondition coherence
-- Resource limit feasibility
-- **Status**: Stub — returns Ok for anything (Phase 3)
+
+Validates contracts against the ICL specification. Four verification passes:
+
+1. **Type Checker** — Validates all types (primitives, composites, collections), checks parameter/postcondition consistency, enforces no implicit coercion
+2. **Invariant Verifier** — Checks invariants are satisfiable, consistent (no contradictions), and preserved by all operations
+3. **Determinism Checker** — Detects randomness, system time access, external I/O, floating-point non-determinism, and hash iteration order dependencies
+4. **Coherence Verifier** — Checks precondition/postcondition consistency, detects circular dependencies, verifies resource limits are feasible
 
 ### Executor (`icl-core::executor`)
-Runs contracts in a sandboxed environment.
-- Precondition evaluation
-- WASM sandbox isolation
-- Postcondition verification
-- Resource limit enforcement
-- Provenance logging
-- **Status**: Stub — returns empty string (Phase 5)
+
+Runs contracts in a sandboxed environment:
+
+- Evaluates preconditions before execution
+- Applies operation with given inputs
+- Verifies postconditions after execution
+- Enforces resource limits (memory bytes, computation timeout, state size)
+- Records all state changes in a provenance log
+- No WASM needed — ICL is declarative, execution is simulated
+
+---
 
 ## Crate Structure
 
 ```
-crates/
-├── icl-core/    # Library crate (all logic)
-└── icl-cli/     # Binary crate (CLI interface)
+ICL-Runtime/
+├── crates/
+│   ├── icl-core/        # Library crate — all logic
+│   │   └── src/
+│   │       ├── lib.rs           # Public types (Contract, Identity, etc.)
+│   │       ├── parser/
+│   │       │   ├── mod.rs       # parse_contract()
+│   │       │   ├── tokenizer.rs # Token scanning
+│   │       │   └── ast.rs       # AST node types
+│   │       ├── normalizer.rs    # normalize()
+│   │       ├── verifier.rs      # verify_contract()
+│   │       ├── executor.rs      # execute_contract()
+│   │       └── error.rs         # Error types
+│   └── icl-cli/         # Binary crate — CLI interface
+│       └── src/
+│           └── main.rs          # clap commands
+├── bindings/
+│   ├── python/          # PyO3 + maturin
+│   ├── javascript/      # wasm-bindgen + wasm-pack
+│   └── go/              # cgo + cbindgen
+└── tests/
+    ├── integration/     # Cross-module tests
+    ├── conformance/     # Spec compliance
+    └── determinism/     # 100-iteration proofs
 ```
+
+---
 
 ## Determinism Architecture
 
-The runtime enforces determinism at every level:
-- **No randomness**: No `rand`, no UUIDs generated at runtime
-- **No system time**: Timestamps are inputs, never generated
-- **Ordered collections**: `BTreeMap` everywhere, never `HashMap`
-- **IEEE 754**: Strict floating point semantics
-- **100-iteration proof**: Every test runs 100 times, all outputs must match
+Determinism is enforced at every level:
 
-## Language Bindings
+| Guarantee | How |
+|-----------|-----|
+| No randomness | No `rand` crate, no UUID generation at runtime |
+| No system time | All timestamps are inputs, never generated |
+| Ordered collections | `BTreeMap` everywhere, never `HashMap` |
+| Stable floating point | IEEE 754 strict semantics |
+| Deterministic ordering | All iteration is sorted |
+| 100-iteration proof | Every test runs 100 times, all outputs must match byte-for-byte |
 
-All bindings wrap the same Rust core:
+---
 
-| Language | Technology | Package |
-|----------|-----------|---------|
-| Python | PyO3 + maturin | `pip install icl-runtime` |
-| JavaScript | wasm-pack (WASM) | `npm install icl-runtime` |
-| Go | cgo + cbindgen | `go get github.com/ICL-System/ICL-Runtime/bindings/go` |
+## Language Bindings Architecture
+
+All bindings wrap the same Rust core — they never reimplement logic:
+
+```
+                    ┌──────────────┐
+                    │   icl-core   │  ← Single Rust library
+                    └──────┬───────┘
+            ┌──────────────┼──────────────┐
+            │              │              │
+     ┌──────┴──────┐ ┌────┴────┐ ┌───────┴──────┐
+     │ PyO3 (FFI)  │ │  WASM   │ │  cgo (FFI)   │
+     │  maturin    │ │wasm-pack│ │  cbindgen    │
+     └──────┬──────┘ └────┬────┘ └───────┬──────┘
+            │              │              │
+     ┌──────┴──────┐ ┌────┴────┐ ┌───────┴──────┐
+     │   Python    │ │  JS/TS  │ │     Go       │
+     │ pip install │ │npm inst.│ │   go get     │
+     └─────────────┘ └─────────┘ └──────────────┘
+```
+
+| Language | Technology | Package Name |
+|----------|-----------|--------------|
+| Python | PyO3 + maturin | `icl-runtime` on [test.pypi.org](https://test.pypi.org/project/icl-runtime/) |
+| JavaScript | wasm-bindgen + wasm-pack | `icl-wasm` (npm) |
+| Go | cgo + cbindgen | `github.com/ICL-System/ICL-Runtime/bindings/go` |
+
+All three expose the same 5 functions: parse, normalize, verify, execute, semantic hash.
