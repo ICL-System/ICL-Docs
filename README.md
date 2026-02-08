@@ -1,6 +1,6 @@
 # ICL Documentation
 
-> **Status: Phase 0 — Structure Created**
+> **Status: Phase 1 — Active Development**
 >
 > Documentation website for the [Intent Contract Language (ICL)](https://github.com/ICL-System/ICL-Spec) ecosystem. Built with [mdBook](https://rust-lang.github.io/mdBook/).
 
@@ -38,7 +38,7 @@ ICL-Docs/
 │   │   └── guide.md
 │   └── integrations/
 │       └── overview.md
-└── theme/             # Custom theme (optional)
+└── README.md
 ```
 
 ## Related Repositories
@@ -46,7 +46,7 @@ ICL-Docs/
 | Repo | Purpose |
 |------|---------|
 | [ICL-Spec](https://github.com/ICL-System/ICL-Spec) | The standard: BNF grammar, specification, conformance tests |
-| [ICL-Runtime](https://github.com/ICL-System/ICL-Runtime) | Canonical Rust implementation + CLI + language bindings |
+| [ICL-Runtime](https://github.com/ICL-System/ICL-Runtime) | Canonical Rust implementation + CLI |
 
 ## License
 
