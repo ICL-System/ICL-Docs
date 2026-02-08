@@ -1,6 +1,6 @@
 # ICL Documentation
 
-> **Status: Phase 1 — Active Development**
+> **Status: Phases 0–9 Complete**
 >
 > Documentation website for the [Intent Contract Language (ICL)](https://github.com/ICL-System/ICL-Spec) ecosystem. Built with [mdBook](https://rust-lang.github.io/mdBook/).
 
@@ -50,4 +50,4 @@ ICL-Docs/
 
 ## License
 
-Apache License 2.0
+MIT — See [LICENSE](LICENSE) for details.

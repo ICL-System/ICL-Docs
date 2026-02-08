@@ -23,7 +23,7 @@ An ICL contract consists of 7 sections (6 required, 1 optional):
 | Float | 64-bit IEEE 754 | `3.14` |
 | String | UTF-8 text | `"hello"` |
 | Boolean | Logical | `true` |
-| ISO8601 | Timestamp | `"2025-01-01T00:00:00Z"` |
+| ISO8601 | Timestamp | `2025-01-01T00:00:00Z` |
 | UUID | Unique ID | `"550e8400-..."` |
 
 ### Composites

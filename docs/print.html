@@ -37,7 +37,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "ayu";
-            window.path_to_searchindex_js = "searchindex-218985da.js";
+            window.path_to_searchindex_js = "searchindex-dff262fc.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-d7ba209e.js"></script>
@@ -838,7 +838,7 @@ icl-cli verify db-write.icl
 <tr><td>Float</td><td>64-bit IEEE 754</td><td><code>3.14</code></td></tr>
 <tr><td>String</td><td>UTF-8 text</td><td><code>"hello"</code></td></tr>
 <tr><td>Boolean</td><td>Logical</td><td><code>true</code></td></tr>
-<tr><td>ISO8601</td><td>Timestamp</td><td><code>"2025-01-01T00:00:00Z"</code></td></tr>
+<tr><td>ISO8601</td><td>Timestamp</td><td><code>2025-01-01T00:00:00Z</code></td></tr>
 <tr><td>UUID</td><td>Unique ID</td><td><code>"550e8400-..."</code></td></tr>
 </tbody>
 </table>
@@ -989,8 +989,8 @@ icl-cli verify db-write.icl
 <tr><th>Language</th><th>Technology</th><th>Package Name</th></tr>
 </thead>
 <tbody>
-<tr><td>Python</td><td>PyO3 + maturin</td><td><code>icl-runtime</code> on <a href="https://test.pypi.org/project/icl-runtime/">test.pypi.org</a></td></tr>
-<tr><td>JavaScript</td><td>wasm-bindgen + wasm-pack</td><td><code>icl-runtime</code> (npm)</td></tr>
+<tr><td>Python</td><td>PyO3 + maturin</td><td><code>icl-runtime</code> on <a href="https://pypi.org/project/icl-runtime/">PyPI</a></td></tr>
+<tr><td>JavaScript</td><td>wasm-bindgen + wasm-pack</td><td><code>icl-runtime</code> (local build; npm publish on <code>v*</code> tag)</td></tr>
 <tr><td>Go</td><td>cgo + cbindgen</td><td><code>github.com/ICL-System/ICL-Runtime/bindings/go</code></td></tr>
 </tbody>
 </table>
@@ -1209,7 +1209,7 @@ assert_eq!(contract, roundtrip);
 <h2 id="building-from-source"><a class="header" href="#building-from-source">Building from Source</a></h2>
 <h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
 <ul>
-<li>Rust 1.75+ (<code>rustup install stable</code>)</li>
+<li>Rust 1.93+ (<code>rustup install stable</code>)</li>
 <li>For Python binding: Python 3.8+, maturin</li>
 <li>For JS binding: wasm-pack, Node.js 16+</li>
 <li>For Go binding: Go 1.21+, cbindgen</li>
@@ -1437,7 +1437,7 @@ icl-cli init
 <p>Show version information.</p>
 <pre><code class="language-bash">icl-cli version
 # icl-cli 0.1.0 (icl-core 0.1.0)
-# Phases complete: Parser, Normalizer, Verifier, CLI
+# Phases complete: Parser, Normalizer, Verifier, Executor, CLI, Bindings, CI/CD, Conformance
 </code></pre>
 <hr>
 <h2 id="exit-codes"><a class="header" href="#exit-codes">Exit Codes</a></h2>
@@ -1647,7 +1647,7 @@ let hash = normalizer::semantic_hash(&amp;icl_text)?;
 <h3 id="rust-core--cli"><a class="header" href="#rust-core--cli">Rust (core + CLI)</a></h3>
 <pre><code class="language-bash">cd ICL-Runtime
 cargo test --workspace
-# 175 tests passing
+# 203 tests passing (175 icl-core + 28 icl-cli)
 </code></pre>
 <h3 id="python-1"><a class="header" href="#python-1">Python</a></h3>
 <pre><code class="language-bash">cd ICL-Runtime/bindings/python

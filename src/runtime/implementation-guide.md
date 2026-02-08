@@ -32,7 +32,7 @@ Any ICL implementation must guarantee determinism. Here's what to check:
 
 ### Prerequisites
 
-- Rust 1.75+ (`rustup install stable`)
+- Rust 1.93+ (`rustup install stable`)
 - For Python binding: Python 3.8+, maturin
 - For JS binding: wasm-pack, Node.js 16+
 - For Go binding: Go 1.21+, cbindgen

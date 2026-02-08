@@ -9,7 +9,7 @@ ICL has 268 tests across Rust, Python, JavaScript, and Go. Every test proves det
 ```bash
 cd ICL-Runtime
 cargo test --workspace
-# 175 tests passing
+# 203 tests passing (175 icl-core + 28 icl-cli)
 ```
 
 ### Python
