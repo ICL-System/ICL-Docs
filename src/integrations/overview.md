@@ -16,17 +16,12 @@ Every binding exposes the same 5 functions:
 
 ## Python (PyO3 + maturin)
 
-**Package:** `icl-runtime` on [test.pypi.org](https://test.pypi.org/project/icl-runtime/)
+**Package:** `icl-runtime` on [PyPI](https://pypi.org/project/icl-runtime/)
 
 ### Install
 
 ```bash
-# From test.pypi.org (current)
-pip install --index-url https://test.pypi.org/simple/ icl-runtime
-
-# From local build
-cd ICL-Runtime/bindings/python
-pip install -e .
+pip install icl-runtime
 ```
 
 ### Usage
@@ -73,21 +68,18 @@ def semantic_hash(icl_text: str) -> str: ...
 
 ## JavaScript / TypeScript (wasm-pack)
 
-**Package:** `icl-runtime`
+**Package:** `icl-runtime` on [npm](https://www.npmjs.com/package/icl-runtime)
 
 ### Install
 
 ```bash
-cd ICL-Runtime/bindings/javascript
-wasm-pack build --target nodejs
+npm install icl-runtime
 ```
-
-The built package is in `pkg/`.
 
 ### Usage (Node.js)
 
 ```javascript
-const icl = require('./pkg/icl_runtime.js');
+const icl = require('icl-runtime');
 
 // Parse
 const parsed = icl.parseContract(contractText);
@@ -197,7 +189,7 @@ Use `icl-core` directly as a Rust dependency:
 ```toml
 # Cargo.toml
 [dependencies]
-icl-core = { path = "crates/icl-core" }
+icl-core = "0.1"
 ```
 
 ```rust

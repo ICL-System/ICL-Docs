@@ -5,7 +5,10 @@ The ICL CLI provides 9 commands for working with intent contracts.
 ## Installation
 
 ```bash
-# From source
+# From crates.io (recommended)
+cargo install icl-cli
+
+# Or from source
 git clone https://github.com/ICL-System/ICL-Runtime.git
 cd ICL-Runtime
 cargo install --path crates/icl-cli
@@ -174,7 +177,7 @@ Show version information.
 
 ```bash
 icl-cli version
-# icl-cli 0.1.0 (icl-core 0.1.0)
+# icl-cli 0.1.1 (icl-core 0.1.1)
 # Phases complete: Parser, Normalizer, Verifier, Executor, CLI, Bindings, CI/CD, Conformance
 ```
 

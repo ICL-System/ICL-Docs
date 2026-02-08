@@ -4,13 +4,13 @@ Get up and running with ICL in under 5 minutes.
 
 ## Install the CLI
 
-### From Source (Rust)
-
 ```bash
-git clone https://github.com/ICL-System/ICL-Runtime.git
-cd ICL-Runtime
-cargo install --path crates/icl-cli
+cargo install icl-cli
 ```
+
+> Requires [Rust](https://rustup.rs/). The CLI is a compiled Rust binary — it is not included in the Python or JavaScript packages.
+
+## Install Language Bindings
 
 ### Python
 
@@ -18,7 +18,7 @@ cargo install --path crates/icl-cli
 pip install icl-runtime
 ```
 
-> The Python package is published on [test.pypi.org](https://test.pypi.org/project/icl-runtime/) during development.
+> Published on [PyPI](https://pypi.org/project/icl-runtime/).
 
 ### JavaScript / Node.js
 
@@ -26,12 +26,7 @@ pip install icl-runtime
 npm install icl-runtime
 ```
 
-> Not yet published to npm. During development, build from source:
->
-> ```bash
-> cd ICL-Runtime/bindings/javascript
-> wasm-pack build --target nodejs
-> ```
+> Published on [npm](https://www.npmjs.com/package/icl-runtime/).
 
 ### Go
 
@@ -199,7 +194,7 @@ hash_val = icl.semantic_hash(open("hello.icl").read())
 ## Using from JavaScript
 
 ```javascript
-const icl = require('./path-to/pkg/icl_runtime.js');
+const icl = require('icl-runtime');
 
 // Parse
 const result = icl.parseContract(contractText);
