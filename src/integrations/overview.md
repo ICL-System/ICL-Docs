@@ -73,7 +73,7 @@ def semantic_hash(icl_text: str) -> str: ...
 
 ## JavaScript / TypeScript (wasm-pack)
 
-**Package:** `icl-wasm`
+**Package:** `icl-runtime`
 
 ### Install
 
@@ -87,7 +87,7 @@ The built package is in `pkg/`.
 ### Usage (Node.js)
 
 ```javascript
-const icl = require('./pkg/icl_wasm.js');
+const icl = require('./pkg/icl_runtime.js');
 
 // Parse
 const parsed = icl.parseContract(contractText);

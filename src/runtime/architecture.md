@@ -130,7 +130,7 @@ All bindings wrap the same Rust core — they never reimplement logic:
 | Language | Technology | Package Name |
 |----------|-----------|--------------|
 | Python | PyO3 + maturin | `icl-runtime` on [test.pypi.org](https://test.pypi.org/project/icl-runtime/) |
-| JavaScript | wasm-bindgen + wasm-pack | `icl-wasm` (npm) |
+| JavaScript | wasm-bindgen + wasm-pack | `icl-runtime` (npm) |
 | Go | cgo + cbindgen | `github.com/ICL-System/ICL-Runtime/bindings/go` |
 
 All three expose the same 5 functions: parse, normalize, verify, execute, semantic hash.

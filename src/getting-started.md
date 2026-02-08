@@ -195,7 +195,7 @@ hash_val = icl.semantic_hash(open("hello.icl").read())
 ## Using from JavaScript
 
 ```javascript
-const icl = require('./path-to/pkg/icl_wasm.js');
+const icl = require('./path-to/pkg/icl_runtime.js');
 
 // Parse
 const result = icl.parseContract(contractText);

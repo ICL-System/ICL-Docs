@@ -36,7 +36,7 @@
             const path_to_root = "../";
             const default_light_theme = "light";
             const default_dark_theme = "ayu";
-            window.path_to_searchindex_js = "../searchindex-c8a3971b.js";
+            window.path_to_searchindex_js = "../searchindex-0ce63efd.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="../toc-d7ba209e.js"></script>
@@ -244,14 +244,14 @@ def semantic_hash(icl_text: str) -&gt; str: ...
 </code></pre>
 <hr>
 <h2 id="javascript--typescript-wasm-pack"><a class="header" href="#javascript--typescript-wasm-pack">JavaScript / TypeScript (wasm-pack)</a></h2>
-<p><strong>Package:</strong> <code>icl-wasm</code></p>
+<p><strong>Package:</strong> <code>icl-runtime</code></p>
 <h3 id="install-1"><a class="header" href="#install-1">Install</a></h3>
 <pre><code class="language-bash">cd ICL-Runtime/bindings/javascript
 wasm-pack build --target nodejs
 </code></pre>
 <p>The built package is in <code>pkg/</code>.</p>
 <h3 id="usage-nodejs"><a class="header" href="#usage-nodejs">Usage (Node.js)</a></h3>
-<pre><code class="language-javascript">const icl = require('./pkg/icl_wasm.js');
+<pre><code class="language-javascript">const icl = require('./pkg/icl_runtime.js');
 
 // Parse
 const parsed = icl.parseContract(contractText);
