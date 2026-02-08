@@ -1,0 +1,1829 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Intent Contract Language (ICL)</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Documentation for the Intent Contract Language — deterministic intent contracts for AI systems.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-ae938929.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="src/custom-c970e987.css">
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "ayu";
+            window.path_to_searchindex_js = "searchindex-c8a3971b.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-d7ba209e.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Intent Contract Language (ICL)</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+                        <a href="https://github.com/ICL-System/ICL-Docs" title="Git repository" aria-label="Git repository">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6zm-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3zm44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9zM244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8zM97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1zm-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7zm32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1zm-11.4-14.7c-1.6 1-1.6 3.6 0 5.9 1.6 2.3 4.3 3.3 5.6 2.3 1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="intent-contract-language-icl"><a class="header" href="#intent-contract-language-icl">Intent Contract Language (ICL)</a></h1>
+<p><strong>ICL</strong> is a deterministic, language-agnostic specification language for intent contracts — formal documents that describe what a system should do, how it should behave, and what it guarantees.</p>
+<h2 id="what-is-an-intent-contract"><a class="header" href="#what-is-an-intent-contract">What is an Intent Contract?</a></h2>
+<p>An intent contract formally specifies:</p>
+<ul>
+<li><strong>What</strong> a system should do (purpose and operations)</li>
+<li><strong>How</strong> it should behave (preconditions, postconditions, invariants)</li>
+<li><strong>What it must not do</strong> (constraints, refusals, resource limits)</li>
+<li><strong>What it guarantees</strong> (commitments to the user)</li>
+</ul>
+<p>Think of it like OpenAPI for human intent and AI agent constraints — but machine-checkable and deterministic.</p>
+<h2 id="why-icl"><a class="header" href="#why-icl">Why ICL?</a></h2>
+<p>Every AI system, API, and automation tool has implicit contracts. Today, these live in:</p>
+<ul>
+<li>Natural language documentation (ambiguous)</li>
+<li>Type definitions (incomplete)</li>
+<li>Test cases (partial)</li>
+<li>Informal agreements (unverifiable)</li>
+</ul>
+<p>ICL replaces all of these with a <strong>single, machine-checkable, deterministic</strong> format. Given the same contract and the same input, every ICL implementation produces identical output — always.</p>
+<h2 id="quick-example"><a class="header" href="#quick-example">Quick Example</a></h2>
+<pre><code>Contract {
+  Identity {
+    stable_id: "ic-hello-001",
+    version: 1,
+    created_timestamp: 2026-02-01T10:00:00Z,
+    owner: "developer",
+    semantic_hash: "e5f6a7b8c9d0"
+  }
+  PurposeStatement {
+    narrative: "Simple contract that echoes input messages",
+    intent_source: "tutorial",
+    confidence_level: 1.0
+  }
+  DataSemantics {
+    state: { message: String, count: Integer = 0 },
+    invariants: ["message is not empty", "count &gt;= 0"]
+  }
+  BehavioralSemantics {
+    operations: [{
+      name: "echo",
+      precondition: "input_provided",
+      parameters: { message: String },
+      postcondition: "state_updated_with_message",
+      side_effects: ["log_operation"],
+      idempotence: "idempotent"
+    }]
+  }
+  ExecutionConstraints {
+    trigger_types: ["manual"],
+    resource_limits: {
+      max_memory_bytes: 1048576,
+      computation_timeout_ms: 100,
+      max_state_size_bytes: 1048576
+    },
+    external_permissions: [],
+    sandbox_mode: "full_isolation"
+  }
+  HumanMachineContract {
+    system_commitments: ["All messages are echoed"],
+    system_refusals: ["Will not modify past messages"],
+    user_obligations: ["May provide new messages"]
+  }
+}
+</code></pre>
+<h2 id="the-icl-ecosystem"><a class="header" href="#the-icl-ecosystem">The ICL Ecosystem</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Repository</th><th>What It Contains</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://github.com/ICL-System/ICL-Spec">ICL-Spec</a></td><td>The standard — BNF grammar, core specification, conformance tests</td></tr>
+<tr><td><a href="https://github.com/ICL-System/ICL-Runtime">ICL-Runtime</a></td><td>Canonical Rust implementation, CLI, and language bindings</td></tr>
+<tr><td>ICL-Docs (this site)</td><td>Documentation you’re reading now</td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="core-guarantees"><a class="header" href="#core-guarantees">Core Guarantees</a></h2>
+<ul>
+<li><strong>Deterministic</strong>: Same input always produces identical output — no randomness, no system time dependency</li>
+<li><strong>Verifiable</strong>: All contract properties are machine-checkable (types, invariants, coherence)</li>
+<li><strong>Bounded</strong>: All execution is bounded in memory, time, and state size</li>
+<li><strong>Canonical</strong>: One normalized form per contract, with SHA-256 semantic hashing</li>
+<li><strong>Language-agnostic</strong>: One Rust core compiled to Python, JavaScript, and Go</li>
+</ul>
+<h2 id="current-status"><a class="header" href="#current-status">Current Status</a></h2>
+<p>ICL is in <strong>active development</strong>. The core pipeline is fully implemented:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Component</th><th>Status</th><th>Tests</th></tr>
+</thead>
+<tbody>
+<tr><td>Parser (tokenizer + recursive descent)</td><td>Complete</td><td>80+ tests</td></tr>
+<tr><td>Normalizer (canonical form + hashing)</td><td>Complete</td><td>30+ tests</td></tr>
+<tr><td>Verifier (types, invariants, determinism, coherence)</td><td>Complete</td><td>40+ tests</td></tr>
+<tr><td>Executor (sandbox + provenance logging)</td><td>Complete</td><td>20+ tests</td></tr>
+<tr><td>CLI (9 commands)</td><td>Complete</td><td>15+ tests</td></tr>
+<tr><td>Python binding (PyO3)</td><td>Complete</td><td>18 tests</td></tr>
+<tr><td>JavaScript binding (WASM)</td><td>Complete</td><td>31 tests</td></tr>
+<tr><td>Go binding (cgo)</td><td>Complete</td><td>16 tests</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p><strong>Total: 268 tests passing</strong> — including 100-iteration determinism proofs across all components and all language bindings.</p>
+</blockquote>
+<h2 id="getting-started"><a class="header" href="#getting-started">Getting Started</a></h2>
+<p>Ready to try ICL? Start with the <a href="#quick-start">Quick Start Guide</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-start"><a class="header" href="#quick-start">Quick Start</a></h1>
+<p>Get up and running with ICL in under 5 minutes.</p>
+<h2 id="install-the-cli"><a class="header" href="#install-the-cli">Install the CLI</a></h2>
+<h3 id="from-source-rust"><a class="header" href="#from-source-rust">From Source (Rust)</a></h3>
+<pre><code class="language-bash">git clone https://github.com/ICL-System/ICL-Runtime.git
+cd ICL-Runtime
+cargo install --path crates/icl-cli
+</code></pre>
+<h3 id="python"><a class="header" href="#python">Python</a></h3>
+<pre><code class="language-bash">pip install icl-runtime
+</code></pre>
+<blockquote>
+<p>The Python package is published on <a href="https://test.pypi.org/project/icl-runtime/">test.pypi.org</a> during development.</p>
+</blockquote>
+<h3 id="javascript--nodejs"><a class="header" href="#javascript--nodejs">JavaScript / Node.js</a></h3>
+<p>Build from source with wasm-pack:</p>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/javascript
+wasm-pack build --target nodejs
+</code></pre>
+<h3 id="go"><a class="header" href="#go">Go</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/go/ffi
+cargo build --release
+</code></pre>
+<p>Then import the Go module from <code>bindings/go/</code>.</p>
+<h2 id="create-your-first-contract"><a class="header" href="#create-your-first-contract">Create Your First Contract</a></h2>
+<p>Scaffold a new contract:</p>
+<pre><code class="language-bash">icl init hello
+# ✓ created hello.icl
+</code></pre>
+<p>Or create <code>hello.icl</code> manually:</p>
+<pre><code>Contract {
+  Identity {
+    stable_id: "ic-hello-001",
+    version: 1,
+    created_timestamp: 2026-02-01T10:00:00Z,
+    owner: "developer",
+    semantic_hash: "e5f6a7b8c9d0"
+  }
+  PurposeStatement {
+    narrative: "Simple contract that echoes input messages",
+    intent_source: "tutorial",
+    confidence_level: 1.0
+  }
+  DataSemantics {
+    state: {
+      message: String,
+      count: Integer = 0
+    },
+    invariants: [
+      "message is not empty",
+      "count &gt;= 0"
+    ]
+  }
+  BehavioralSemantics {
+    operations: [{
+      name: "echo",
+      precondition: "input_provided",
+      parameters: { message: String },
+      postcondition: "state_updated_with_message",
+      side_effects: ["log_operation"],
+      idempotence: "idempotent"
+    }]
+  }
+  ExecutionConstraints {
+    trigger_types: ["manual"],
+    resource_limits: {
+      max_memory_bytes: 1048576,
+      computation_timeout_ms: 100,
+      max_state_size_bytes: 1048576
+    },
+    external_permissions: [],
+    sandbox_mode: "full_isolation"
+  }
+  HumanMachineContract {
+    system_commitments: ["All messages are echoed"],
+    system_refusals: ["Will not modify past messages"],
+    user_obligations: ["May provide new messages"]
+  }
+}
+</code></pre>
+<h2 id="validate"><a class="header" href="#validate">Validate</a></h2>
+<p>Check that the contract parses correctly:</p>
+<pre><code class="language-bash">icl validate hello.icl
+# ✓ hello.icl is valid
+</code></pre>
+<p>Get machine-readable output with <code>--json</code>:</p>
+<pre><code class="language-bash">icl validate hello.icl --json
+# {"file":"hello.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
+</code></pre>
+<h2 id="verify"><a class="header" href="#verify">Verify</a></h2>
+<p>Run full verification — types, invariants, determinism, and coherence:</p>
+<pre><code class="language-bash">icl verify hello.icl
+# ✓ hello.icl verified successfully
+</code></pre>
+<h2 id="normalize"><a class="header" href="#normalize">Normalize</a></h2>
+<p>Get the canonical form (sorted sections, sorted fields, computed hash):</p>
+<pre><code class="language-bash">icl normalize hello.icl
+</code></pre>
+<p>The normalizer produces a deterministic output — running it twice always gives the same result.</p>
+<h2 id="compute-hash"><a class="header" href="#compute-hash">Compute Hash</a></h2>
+<p>Get the SHA-256 semantic hash:</p>
+<pre><code class="language-bash">icl hash hello.icl
+# 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
+</code></pre>
+<p>Two contracts with the same semantics always produce the same hash, regardless of formatting or comment differences.</p>
+<h2 id="execute"><a class="header" href="#execute">Execute</a></h2>
+<p>Run a contract with inputs:</p>
+<pre><code class="language-bash">icl execute hello.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+# ✓ hello.icl executed successfully
+#   Operations: 1
+#   Provenance entries: 1
+</code></pre>
+<h2 id="compare-contracts"><a class="header" href="#compare-contracts">Compare Contracts</a></h2>
+<p>Semantic diff between two contracts:</p>
+<pre><code class="language-bash">icl diff v1.icl v2.icl
+# Shows field-by-field differences in canonical form
+</code></pre>
+<h2 id="using-from-python"><a class="header" href="#using-from-python">Using from Python</a></h2>
+<pre><code class="language-python">import icl
+
+# Parse
+result = icl.parse_contract(open("hello.icl").read())
+print(result)  # JSON string of the parsed contract
+
+# Normalize
+canonical = icl.normalize(open("hello.icl").read())
+
+# Verify
+issues = icl.verify(open("hello.icl").read())
+
+# Execute
+output = icl.execute(
+    open("hello.icl").read(),
+    '{"operation":"echo","inputs":{"message":"Hello"}}'
+)
+
+# Semantic hash
+hash_val = icl.semantic_hash(open("hello.icl").read())
+</code></pre>
+<h2 id="using-from-javascript"><a class="header" href="#using-from-javascript">Using from JavaScript</a></h2>
+<pre><code class="language-javascript">const icl = require('./path-to/pkg/icl_wasm.js');
+
+// Parse
+const result = icl.parseContract(contractText);
+
+// Normalize
+const canonical = icl.normalize(contractText);
+
+// Verify
+const issues = icl.verify(contractText);
+
+// Execute
+const output = icl.execute(contractText, '{"operation":"echo","inputs":{"message":"Hello"}}');
+
+// Semantic hash
+const hash = icl.semanticHash(contractText);
+</code></pre>
+<h2 id="using-from-go"><a class="header" href="#using-from-go">Using from Go</a></h2>
+<pre><code class="language-go">package main
+
+import (
+    icl "github.com/ICL-System/ICL-Runtime/bindings/go"
+    "fmt"
+)
+
+func main() {
+    contract := `Contract { ... }` // your ICL text
+
+    result, err := icl.ParseContract(contract)
+    if err != nil { panic(err) }
+    fmt.Println(result)
+
+    canonical, _ := icl.Normalize(contract)
+    hash, _ := icl.SemanticHash(contract)
+    fmt.Println(canonical, hash)
+}
+</code></pre>
+<h2 id="next-steps"><a class="header" href="#next-steps">Next Steps</a></h2>
+<ul>
+<li><a href="#writing-contracts">Writing Contracts</a> — learn the full ICL syntax and type system</li>
+<li><a href="#cli-reference">CLI Reference</a> — all 9 CLI commands</li>
+<li><a href="#specification-overview">Specification Overview</a> — the formal model</li>
+<li><a href="#architecture">Architecture</a> — how the runtime works</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="writing-contracts"><a class="header" href="#writing-contracts">Writing Contracts</a></h1>
+<p>This guide covers the full ICL contract syntax, all sections, and the type system.</p>
+<h2 id="contract-structure"><a class="header" href="#contract-structure">Contract Structure</a></h2>
+<p>Every ICL contract follows this structure:</p>
+<pre><code>Contract {
+  Identity { ... }
+  PurposeStatement { ... }
+  DataSemantics { ... }
+  BehavioralSemantics { ... }
+  ExecutionConstraints { ... }
+  HumanMachineContract { ... }
+  Extensions { ... }     // optional
+}
+</code></pre>
+<p>All sections except <code>Extensions</code> are required. Fields within a section are separated by commas.</p>
+<hr>
+<h2 id="identity"><a class="header" href="#identity">Identity</a></h2>
+<p>Uniquely identifies the contract. Every field is required.</p>
+<pre><code>Identity {
+  stable_id: "ic-my-contract-001",
+  version: 1,
+  created_timestamp: 2026-02-01T10:00:00Z,
+  owner: "your-name",
+  semantic_hash: "placeholder"
+}
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>stable_id</code></td><td>String</td><td>Unique identifier, never changes across versions</td></tr>
+<tr><td><code>version</code></td><td>Integer</td><td>Monotonically increasing version number</td></tr>
+<tr><td><code>created_timestamp</code></td><td>ISO8601</td><td>When this version was created</td></tr>
+<tr><td><code>owner</code></td><td>String</td><td>Author or maintainer</td></tr>
+<tr><td><code>semantic_hash</code></td><td>String</td><td>SHA-256 hash of canonical form (auto-computed by <code>icl normalize</code>)</td></tr>
+</tbody>
+</table>
+</div>
+<blockquote>
+<p>The <code>semantic_hash</code> is automatically recomputed when you run <code>icl normalize</code>. You can use a placeholder during authoring.</p>
+</blockquote>
+<hr>
+<h2 id="purposestatement"><a class="header" href="#purposestatement">PurposeStatement</a></h2>
+<p>Human-readable description of the contract’s intent.</p>
+<pre><code>PurposeStatement {
+  narrative: "Manages user preferences with full audit logging",
+  intent_source: "human_authored",
+  confidence_level: 0.95
+}
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>narrative</code></td><td>String</td><td>What this contract does, in plain language</td></tr>
+<tr><td><code>intent_source</code></td><td>String</td><td>Who/what authored it (e.g., <code>"human_authored"</code>, <code>"ai_generated"</code>, <code>"developer_specification"</code>)</td></tr>
+<tr><td><code>confidence_level</code></td><td>Float</td><td>0.0 to 1.0 — how confident the author is in the contract’s correctness</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="datasemantics"><a class="header" href="#datasemantics">DataSemantics</a></h2>
+<p>Defines the contract’s state and invariants.</p>
+<pre><code>DataSemantics {
+  state: {
+    count: Integer = 0,
+    name: String,
+    items: Array&lt;String&gt;,
+    active: Boolean = true
+  },
+  invariants: [
+    "count &gt;= 0",
+    "name.length &lt;= 255"
+  ]
+}
+</code></pre>
+<h3 id="state-fields"><a class="header" href="#state-fields">State Fields</a></h3>
+<p>Each state field has a name, a type, and an optional default value:</p>
+<pre><code>field_name: Type = default_value
+</code></pre>
+<h3 id="primitive-types"><a class="header" href="#primitive-types">Primitive Types</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th><th>Example Values</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Integer</code></td><td>64-bit signed integer</td><td><code>0</code>, <code>42</code>, <code>-1</code></td></tr>
+<tr><td><code>Float</code></td><td>64-bit IEEE 754 floating point</td><td><code>3.14</code>, <code>0.0</code>, <code>-1.5</code></td></tr>
+<tr><td><code>String</code></td><td>UTF-8 text</td><td><code>"hello"</code>, <code>""</code></td></tr>
+<tr><td><code>Boolean</code></td><td>Logical value</td><td><code>true</code>, <code>false</code></td></tr>
+<tr><td><code>ISO8601</code></td><td>Timestamp</td><td><code>2026-02-01T10:00:00Z</code></td></tr>
+<tr><td><code>UUID</code></td><td>Universally unique identifier</td><td><code>"550e8400-e29b-41d4-a716-446655440000"</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="composite-types"><a class="header" href="#composite-types">Composite Types</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Syntax</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td><code>Object</code></td><td><code>Object { field: Type, ... }</code></td><td><code>Object { name: String, age: Integer }</code></td></tr>
+<tr><td><code>Enum</code></td><td><code>Enum { Variant1, Variant2, ... }</code></td><td><code>Enum { Active, Inactive, Suspended }</code></td></tr>
+<tr><td><code>Array</code></td><td><code>Array&lt;T&gt;</code></td><td><code>Array&lt;String&gt;</code>, <code>Array&lt;Integer&gt;</code></td></tr>
+<tr><td><code>Map</code></td><td><code>Map&lt;K, V&gt;</code></td><td><code>Map&lt;String, Integer&gt;</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="invariants"><a class="header" href="#invariants">Invariants</a></h3>
+<p>Invariants are string expressions that must always hold for the contract’s state. The verifier checks that:</p>
+<ul>
+<li>Invariants are consistent (no contradictions)</li>
+<li>Invariants can be satisfied by initial state</li>
+<li>Operations preserve invariants</li>
+</ul>
+<hr>
+<h2 id="behavioralsemantics"><a class="header" href="#behavioralsemantics">BehavioralSemantics</a></h2>
+<p>Defines operations — the things the contract can do.</p>
+<pre><code>BehavioralSemantics {
+  operations: [
+    {
+      name: "increment",
+      precondition: "count &lt; 1000",
+      parameters: {},
+      postcondition: "count == old.count + 1",
+      side_effects: [],
+      idempotence: "not_idempotent"
+    },
+    {
+      name: "set_name",
+      precondition: "true",
+      parameters: { new_name: String },
+      postcondition: "name == new_name",
+      side_effects: ["log_change"],
+      idempotence: "idempotent"
+    }
+  ]
+}
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>name</code></td><td>String</td><td>Operation identifier, must be unique within the contract</td></tr>
+<tr><td><code>precondition</code></td><td>String</td><td>Condition that must be true before execution</td></tr>
+<tr><td><code>parameters</code></td><td>Object</td><td>Named parameters with types</td></tr>
+<tr><td><code>postcondition</code></td><td>String</td><td>Condition that must be true after execution</td></tr>
+<tr><td><code>side_effects</code></td><td>Array&lt;String&gt;</td><td>Declared side effects (for transparency)</td></tr>
+<tr><td><code>idempotence</code></td><td>String</td><td><code>"idempotent"</code> or <code>"not_idempotent"</code></td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="executionconstraints"><a class="header" href="#executionconstraints">ExecutionConstraints</a></h2>
+<p>Bounds for execution — resource limits and sandbox configuration.</p>
+<pre><code>ExecutionConstraints {
+  trigger_types: ["api_call", "scheduled"],
+  resource_limits: {
+    max_memory_bytes: 10485760,
+    computation_timeout_ms: 5000,
+    max_state_size_bytes: 1048576
+  },
+  external_permissions: ["network:api.example.com"],
+  sandbox_mode: "full_isolation"
+}
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>trigger_types</code></td><td>Array&lt;String&gt;</td><td>How the contract can be invoked (<code>"manual"</code>, <code>"api_call"</code>, <code>"scheduled"</code>)</td></tr>
+<tr><td><code>resource_limits</code></td><td>Object</td><td>Memory, time, and state size bounds</td></tr>
+<tr><td><code>external_permissions</code></td><td>Array&lt;String&gt;</td><td>Declared external access (empty = fully sandboxed)</td></tr>
+<tr><td><code>sandbox_mode</code></td><td>String</td><td><code>"full_isolation"</code>, <code>"strict"</code>, or <code>"relaxed"</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="resource-limits"><a class="header" href="#resource-limits">Resource Limits</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>max_memory_bytes</code></td><td>Integer</td><td>Maximum memory usage in bytes</td></tr>
+<tr><td><code>computation_timeout_ms</code></td><td>Integer</td><td>Maximum execution time in milliseconds</td></tr>
+<tr><td><code>max_state_size_bytes</code></td><td>Integer</td><td>Maximum state size in bytes</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="humanmachinecontract"><a class="header" href="#humanmachinecontract">HumanMachineContract</a></h2>
+<p>The social contract between the system and the user.</p>
+<pre><code>HumanMachineContract {
+  system_commitments: [
+    "All state changes are logged",
+    "No data leaves the sandbox"
+  ],
+  system_refusals: [
+    "Will not delete data without confirmation"
+  ],
+  user_obligations: [
+    "Must provide valid input format"
+  ]
+}
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Field</th><th>Type</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>system_commitments</code></td><td>Array&lt;String&gt;</td><td>What the system promises to do</td></tr>
+<tr><td><code>system_refusals</code></td><td>Array&lt;String&gt;</td><td>What the system explicitly will not do</td></tr>
+<tr><td><code>user_obligations</code></td><td>Array&lt;String&gt;</td><td>What the user is expected to do</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="extensions-optional"><a class="header" href="#extensions-optional">Extensions (Optional)</a></h2>
+<p>Domain-specific extensions with namespaced key-value pairs.</p>
+<pre><code>Extensions {
+  monitoring: {
+    alert_threshold: 0.95,
+    dashboard_url: "https://monitor.example.com"
+  },
+  compliance: {
+    framework: "SOC2",
+    last_audit: 2025-12-01T00:00:00Z
+  }
+}
+</code></pre>
+<p>Extension namespaces are isolated — they cannot affect core contract semantics.</p>
+<hr>
+<h2 id="comments"><a class="header" href="#comments">Comments</a></h2>
+<p>ICL supports single-line comments:</p>
+<pre><code>// This is a comment
+Contract {
+  // Comments can appear anywhere
+  Identity {
+    stable_id: "example",  // inline comments too
+    ...
+  }
+}
+</code></pre>
+<p>Comments are stripped during normalization and do not affect the semantic hash.</p>
+<hr>
+<h2 id="complete-example"><a class="header" href="#complete-example">Complete Example</a></h2>
+<p>Here is a full, working contract for a database write validator:</p>
+<pre><code>Contract {
+  Identity {
+    stable_id: "ic-db-write-001",
+    version: 1,
+    created_timestamp: 2026-01-31T10:00:00Z,
+    owner: "developer-team",
+    semantic_hash: "auto"
+  }
+  PurposeStatement {
+    narrative: "Validate database writes before execution",
+    intent_source: "developer_specification",
+    confidence_level: 1.0
+  }
+  DataSemantics {
+    state: {
+      query: String,
+      table: String,
+      approved: Boolean = false
+    },
+    invariants: [
+      "query is not empty",
+      "table is not empty"
+    ]
+  }
+  BehavioralSemantics {
+    operations: [
+      {
+        name: "validate_write",
+        precondition: "query is not empty",
+        parameters: { query: String, table: String },
+        postcondition: "approved == true",
+        side_effects: ["log_validation"],
+        idempotence: "idempotent"
+      }
+    ]
+  }
+  ExecutionConstraints {
+    trigger_types: ["api_call"],
+    resource_limits: {
+      max_memory_bytes: 10485760,
+      computation_timeout_ms: 5000,
+      max_state_size_bytes: 1048576
+    },
+    external_permissions: [],
+    sandbox_mode: "full_isolation"
+  }
+  HumanMachineContract {
+    system_commitments: [
+      "All writes are validated before execution",
+      "Invalid writes are rejected with explanation"
+    ],
+    system_refusals: [
+      "Will not execute unvalidated writes",
+      "Will not bypass validation"
+    ],
+    user_obligations: [
+      "Must provide SQL query and target table"
+    ]
+  }
+}
+</code></pre>
+<p>Validate it:</p>
+<pre><code class="language-bash">icl validate db-write.icl
+# ✓ db-write.icl is valid
+
+icl verify db-write.icl
+# ✓ db-write.icl verified successfully
+</code></pre>
+<h2 id="next-steps-1"><a class="header" href="#next-steps-1">Next Steps</a></h2>
+<ul>
+<li>See more <a href="https://github.com/ICL-System/ICL-Spec/tree/main/examples">example contracts</a></li>
+<li>Read the <a href="#specification-overview">full specification</a></li>
+<li>Explore the <a href="#cli-reference">CLI Reference</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="specification-overview"><a class="header" href="#specification-overview">Specification Overview</a></h1>
+<p>The ICL specification is maintained in the <a href="https://github.com/ICL-System/ICL-Spec">ICL-Spec</a> repository. This page provides a summary.</p>
+<h2 id="core-sections"><a class="header" href="#core-sections">Core Sections</a></h2>
+<p>An ICL contract consists of 7 sections (6 required, 1 optional):</p>
+<ol>
+<li><strong>Identity</strong> — Stable ID, version, timestamp, owner, semantic hash</li>
+<li><strong>PurposeStatement</strong> — Narrative description, intent source, confidence level</li>
+<li><strong>DataSemantics</strong> — State definition with types and invariants</li>
+<li><strong>BehavioralSemantics</strong> — Operations with pre/postconditions</li>
+<li><strong>ExecutionConstraints</strong> — Resource limits, permissions, sandbox mode</li>
+<li><strong>HumanMachineContract</strong> — Commitments, refusals, user obligations</li>
+<li><strong>Extensions</strong> — Optional extension points for domain-specific needs</li>
+</ol>
+<h2 id="type-system"><a class="header" href="#type-system">Type System</a></h2>
+<h3 id="primitives"><a class="header" href="#primitives">Primitives</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th><th>Example</th></tr>
+</thead>
+<tbody>
+<tr><td>Integer</td><td>64-bit signed</td><td><code>42</code></td></tr>
+<tr><td>Float</td><td>64-bit IEEE 754</td><td><code>3.14</code></td></tr>
+<tr><td>String</td><td>UTF-8 text</td><td><code>"hello"</code></td></tr>
+<tr><td>Boolean</td><td>Logical</td><td><code>true</code></td></tr>
+<tr><td>ISO8601</td><td>Timestamp</td><td><code>"2025-01-01T00:00:00Z"</code></td></tr>
+<tr><td>UUID</td><td>Unique ID</td><td><code>"550e8400-..."</code></td></tr>
+</tbody>
+</table>
+</div>
+<h3 id="composites"><a class="header" href="#composites">Composites</a></h3>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Type</th><th>Description</th><th>Syntax</th></tr>
+</thead>
+<tbody>
+<tr><td>Object</td><td>Structured record</td><td><code>Object { name: String, age: Integer }</code></td></tr>
+<tr><td>Enum</td><td>Tagged union</td><td><code>Enum { Active, Inactive, Suspended }</code></td></tr>
+<tr><td>Array</td><td>Ordered collection</td><td><code>Array&lt;String&gt;</code></td></tr>
+<tr><td>Map</td><td>Key-value</td><td><code>Map&lt;String, Integer&gt;</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2 id="determinism-requirements"><a class="header" href="#determinism-requirements">Determinism Requirements</a></h2>
+<p>Every ICL implementation MUST guarantee:</p>
+<ul>
+<li>Same input → same output (no randomness)</li>
+<li>No system time dependency in core logic</li>
+<li>BTreeMap not HashMap (ordered iteration)</li>
+<li>All floating point operations use IEEE 754 semantics</li>
+</ul>
+<h2 id="formal-grammar"><a class="header" href="#formal-grammar">Formal Grammar</a></h2>
+<p>The complete BNF grammar is available at:
+<a href="https://github.com/ICL-System/ICL-Spec/blob/main/grammar/icl.bnf">ICL-Spec/grammar/icl.bnf</a></p>
+<h2 id="full-specification"><a class="header" href="#full-specification">Full Specification</a></h2>
+<p>Read the complete specification:
+<a href="https://github.com/ICL-System/ICL-Spec/blob/main/spec/CORE-SPECIFICATION.md">CORE-SPECIFICATION.md</a></p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="architecture"><a class="header" href="#architecture">Architecture</a></h1>
+<p>The ICL Runtime processes contracts through a four-stage pipeline.</p>
+<h2 id="pipeline"><a class="header" href="#pipeline">Pipeline</a></h2>
+<pre><code>ICL Text → Parser → AST → Normalizer → Canonical Form
+                            ↓
+                         Verifier → Type Check + Invariants + Determinism + Coherence
+                            ↓
+                         Executor → Sandboxed Execution + Provenance Logging
+</code></pre>
+<p>Each stage is independent and can be used standalone.</p>
+<hr>
+<h2 id="components"><a class="header" href="#components">Components</a></h2>
+<h3 id="parser-icl-coreparser"><a class="header" href="#parser-icl-coreparser">Parser (<code>icl-core::parser</code>)</a></h3>
+<p>Converts ICL text into a typed Abstract Syntax Tree (AST).</p>
+<ul>
+<li><strong>Tokenizer</strong> (<code>parser::tokenizer</code>): Character-by-character scanning produces a stream of typed tokens — keywords, identifiers, strings, integers, floats, ISO8601 timestamps, UUIDs, operators, and delimiters. Reports errors with line/column numbers.</li>
+<li><strong>AST</strong> (<code>parser::ast</code>): Defines all AST node types matching the BNF grammar — <code>ContractNode</code>, <code>IdentityNode</code>, <code>TypeExpression</code>, <code>OperationNode</code>, etc.</li>
+<li><strong>Parser</strong> (<code>parser::parse_contract</code>): Recursive descent parser. Handles all 7 contract sections, type expressions (primitives, composites, collections), and error recovery.</li>
+</ul>
+<h3 id="normalizer-icl-corenormalizer"><a class="header" href="#normalizer-icl-corenormalizer">Normalizer (<code>icl-core::normalizer</code>)</a></h3>
+<p>Transforms contracts into a deterministic canonical form.</p>
+<ul>
+<li>Sorts sections alphabetically</li>
+<li>Sorts fields within each section</li>
+<li>Strips all comments and normalizes whitespace</li>
+<li>Expands type shorthands to full forms</li>
+<li>Fills in defaults</li>
+<li>Computes SHA-256 semantic hash of the canonical output</li>
+<li>Guarantees idempotence: <code>normalize(normalize(x)) == normalize(x)</code></li>
+</ul>
+<h3 id="verifier-icl-coreverifier"><a class="header" href="#verifier-icl-coreverifier">Verifier (<code>icl-core::verifier</code>)</a></h3>
+<p>Validates contracts against the ICL specification. Four verification passes:</p>
+<ol>
+<li><strong>Type Checker</strong> — Validates all types (primitives, composites, collections), checks parameter/postcondition consistency, enforces no implicit coercion</li>
+<li><strong>Invariant Verifier</strong> — Checks invariants are satisfiable, consistent (no contradictions), and preserved by all operations</li>
+<li><strong>Determinism Checker</strong> — Detects randomness, system time access, external I/O, floating-point non-determinism, and hash iteration order dependencies</li>
+<li><strong>Coherence Verifier</strong> — Checks precondition/postcondition consistency, detects circular dependencies, verifies resource limits are feasible</li>
+</ol>
+<h3 id="executor-icl-coreexecutor"><a class="header" href="#executor-icl-coreexecutor">Executor (<code>icl-core::executor</code>)</a></h3>
+<p>Runs contracts in a sandboxed environment:</p>
+<ul>
+<li>Evaluates preconditions before execution</li>
+<li>Applies operation with given inputs</li>
+<li>Verifies postconditions after execution</li>
+<li>Enforces resource limits (memory bytes, computation timeout, state size)</li>
+<li>Records all state changes in a provenance log</li>
+<li>No WASM needed — ICL is declarative, execution is simulated</li>
+</ul>
+<hr>
+<h2 id="crate-structure"><a class="header" href="#crate-structure">Crate Structure</a></h2>
+<pre><code>ICL-Runtime/
+├── crates/
+│   ├── icl-core/        # Library crate — all logic
+│   │   └── src/
+│   │       ├── lib.rs           # Public types (Contract, Identity, etc.)
+│   │       ├── parser/
+│   │       │   ├── mod.rs       # parse_contract()
+│   │       │   ├── tokenizer.rs # Token scanning
+│   │       │   └── ast.rs       # AST node types
+│   │       ├── normalizer.rs    # normalize()
+│   │       ├── verifier.rs      # verify_contract()
+│   │       ├── executor.rs      # execute_contract()
+│   │       └── error.rs         # Error types
+│   └── icl-cli/         # Binary crate — CLI interface
+│       └── src/
+│           └── main.rs          # clap commands
+├── bindings/
+│   ├── python/          # PyO3 + maturin
+│   ├── javascript/      # wasm-bindgen + wasm-pack
+│   └── go/              # cgo + cbindgen
+└── tests/
+    ├── integration/     # Cross-module tests
+    ├── conformance/     # Spec compliance
+    └── determinism/     # 100-iteration proofs
+</code></pre>
+<hr>
+<h2 id="determinism-architecture"><a class="header" href="#determinism-architecture">Determinism Architecture</a></h2>
+<p>Determinism is enforced at every level:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Guarantee</th><th>How</th></tr>
+</thead>
+<tbody>
+<tr><td>No randomness</td><td>No <code>rand</code> crate, no UUID generation at runtime</td></tr>
+<tr><td>No system time</td><td>All timestamps are inputs, never generated</td></tr>
+<tr><td>Ordered collections</td><td><code>BTreeMap</code> everywhere, never <code>HashMap</code></td></tr>
+<tr><td>Stable floating point</td><td>IEEE 754 strict semantics</td></tr>
+<tr><td>Deterministic ordering</td><td>All iteration is sorted</td></tr>
+<tr><td>100-iteration proof</td><td>Every test runs 100 times, all outputs must match byte-for-byte</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="language-bindings-architecture"><a class="header" href="#language-bindings-architecture">Language Bindings Architecture</a></h2>
+<p>All bindings wrap the same Rust core — they never reimplement logic:</p>
+<pre><code>                    ┌──────────────┐
+                    │   icl-core   │  ← Single Rust library
+                    └──────┬───────┘
+            ┌──────────────┼──────────────┐
+            │              │              │
+     ┌──────┴──────┐ ┌────┴────┐ ┌───────┴──────┐
+     │ PyO3 (FFI)  │ │  WASM   │ │  cgo (FFI)   │
+     │  maturin    │ │wasm-pack│ │  cbindgen    │
+     └──────┬──────┘ └────┬────┘ └───────┬──────┘
+            │              │              │
+     ┌──────┴──────┐ ┌────┴────┐ ┌───────┴──────┐
+     │   Python    │ │  JS/TS  │ │     Go       │
+     │ pip install │ │npm inst.│ │   go get     │
+     └─────────────┘ └─────────┘ └──────────────┘
+</code></pre>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Language</th><th>Technology</th><th>Package Name</th></tr>
+</thead>
+<tbody>
+<tr><td>Python</td><td>PyO3 + maturin</td><td><code>icl-runtime</code> on <a href="https://test.pypi.org/project/icl-runtime/">test.pypi.org</a></td></tr>
+<tr><td>JavaScript</td><td>wasm-bindgen + wasm-pack</td><td><code>icl-wasm</code> (npm)</td></tr>
+<tr><td>Go</td><td>cgo + cbindgen</td><td><code>github.com/ICL-System/ICL-Runtime/bindings/go</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>All three expose the same 5 functions: parse, normalize, verify, execute, semantic hash.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="api-reference"><a class="header" href="#api-reference">API Reference</a></h1>
+<p>The <code>icl-core</code> library exposes a clean Rust API. All language bindings (Python, JS, Go) wrap these same functions.</p>
+<hr>
+<h2 id="core-functions"><a class="header" href="#core-functions">Core Functions</a></h2>
+<h3 id="parserparse_contract"><a class="header" href="#parserparse_contract"><code>parser::parse_contract</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn parse_contract(input: &amp;str) -&gt; Result&lt;Contract&gt;
+<span class="boring">}</span></code></pre>
+<p>Parses ICL text into a <code>Contract</code> struct. Returns <code>Error::ParseError</code> on invalid syntax.</p>
+<p>The parser uses recursive descent and handles all 7 contract sections, type expressions, and error recovery.</p>
+<h3 id="normalizernormalize"><a class="header" href="#normalizernormalize"><code>normalizer::normalize</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn normalize(icl: &amp;str) -&gt; Result&lt;String&gt;
+<span class="boring">}</span></code></pre>
+<p>Converts ICL text to canonical form. Returns the normalized string.</p>
+<p>Guarantees:</p>
+<ul>
+<li>Idempotent: <code>normalize(normalize(x)) == normalize(x)</code></li>
+<li>Deterministic: same input → same output, always</li>
+<li>Semantic hash is embedded in the <code>Identity.semantic_hash</code> field</li>
+</ul>
+<h3 id="normalizersemantic_hash"><a class="header" href="#normalizersemantic_hash"><code>normalizer::semantic_hash</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn semantic_hash(icl: &amp;str) -&gt; Result&lt;String&gt;
+<span class="boring">}</span></code></pre>
+<p>Computes the SHA-256 hash of the canonical form. Returns a hex string.</p>
+<h3 id="verifierverify_contract"><a class="header" href="#verifierverify_contract"><code>verifier::verify_contract</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn verify_contract(contract: &amp;Contract) -&gt; Result&lt;()&gt;
+<span class="boring">}</span></code></pre>
+<p>Runs all verification passes: type checking, invariant verification, determinism analysis, and coherence checking. Returns <code>Ok(())</code> if the contract passes, or <code>Error</code> with diagnostics.</p>
+<h3 id="executorexecute_contract"><a class="header" href="#executorexecute_contract"><code>executor::execute_contract</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn execute_contract(contract: &amp;Contract, inputs: &amp;str) -&gt; Result&lt;String&gt;
+<span class="boring">}</span></code></pre>
+<p>Executes a contract operation in a sandboxed environment. The <code>inputs</code> parameter is a JSON string with <code>"operation"</code> and <code>"inputs"</code> fields. Returns a JSON string with execution results and provenance log.</p>
+<hr>
+<h2 id="core-types"><a class="header" href="#core-types">Core Types</a></h2>
+<h3 id="contract"><a class="header" href="#contract"><code>Contract</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Contract {
+    pub identity: Identity,
+    pub purpose_statement: PurposeStatement,
+    pub data_semantics: DataSemantics,
+    pub behavioral_semantics: BehavioralSemantics,
+    pub execution_constraints: ExecutionConstraints,
+    pub human_machine_contract: HumanMachineContract,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="identity-1"><a class="header" href="#identity-1"><code>Identity</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Identity {
+    pub stable_id: String,
+    pub version: u32,
+    pub created_timestamp: String,  // ISO8601
+    pub owner: String,
+    pub semantic_hash: String,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="purposestatement-1"><a class="header" href="#purposestatement-1"><code>PurposeStatement</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct PurposeStatement {
+    pub narrative: String,
+    pub intent_source: String,
+    pub confidence_level: f64,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="datasemantics-1"><a class="header" href="#datasemantics-1"><code>DataSemantics</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct DataSemantics {
+    pub state: serde_json::Value,
+    pub invariants: Vec&lt;String&gt;,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="behavioralsemantics-1"><a class="header" href="#behavioralsemantics-1"><code>BehavioralSemantics</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct BehavioralSemantics {
+    pub operations: Vec&lt;Operation&gt;,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="operation"><a class="header" href="#operation"><code>Operation</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Operation {
+    pub name: String,
+    pub precondition: String,
+    pub parameters: serde_json::Value,
+    pub postcondition: String,
+    pub side_effects: Vec&lt;String&gt;,
+    pub idempotence: String,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="executionconstraints-1"><a class="header" href="#executionconstraints-1"><code>ExecutionConstraints</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ExecutionConstraints {
+    pub trigger_types: Vec&lt;String&gt;,
+    pub resource_limits: ResourceLimits,
+    pub external_permissions: Vec&lt;String&gt;,
+    pub sandbox_mode: String,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="resourcelimits"><a class="header" href="#resourcelimits"><code>ResourceLimits</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ResourceLimits {
+    pub max_memory_bytes: u64,
+    pub computation_timeout_ms: u64,
+    pub max_state_size_bytes: u64,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="humanmachinecontract-1"><a class="header" href="#humanmachinecontract-1"><code>HumanMachineContract</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct HumanMachineContract {
+    pub system_commitments: Vec&lt;String&gt;,
+    pub system_refusals: Vec&lt;String&gt;,
+    pub user_obligations: Vec&lt;String&gt;,
+}
+<span class="boring">}</span></code></pre>
+<h3 id="error"><a class="header" href="#error"><code>Error</code></a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum Error {
+    ParseError(String),
+    TypeError { expected: String, found: String },
+    DeterminismViolation(String),
+    ContractViolation { commitment: String, violation: String },
+    ValidationError(String),
+    ExecutionError(String),
+    NormalizationError(String),
+}
+<span class="boring">}</span></code></pre>
+<p>All errors implement <code>Display</code> and <code>std::error::Error</code>.</p>
+<hr>
+<h2 id="usage-example"><a class="header" href="#usage-example">Usage Example</a></h2>
+<pre class="playground"><code class="language-rust">use icl_core::parser::parse_contract;
+use icl_core::normalizer;
+use icl_core::verifier::verify_contract;
+use icl_core::executor::execute_contract;
+
+fn main() -&gt; icl_core::Result&lt;()&gt; {
+    let icl_text = std::fs::read_to_string("contract.icl")?;
+
+    // Parse
+    let contract = parse_contract(&amp;icl_text)?;
+
+    // Verify
+    verify_contract(&amp;contract)?;
+
+    // Normalize
+    let canonical = normalizer::normalize(&amp;icl_text)?;
+    let hash = normalizer::semantic_hash(&amp;icl_text)?;
+    println!("Hash: {}", hash);
+
+    // Execute
+    let result = execute_contract(
+        &amp;contract,
+        r#"{"operation":"echo","inputs":{"message":"Hello"}}"#,
+    )?;
+    println!("Result: {}", result);
+
+    Ok(())
+}</code></pre>
+<hr>
+<h2 id="serialization"><a class="header" href="#serialization">Serialization</a></h2>
+<p>All core types derive <code>serde::Serialize</code> and <code>serde::Deserialize</code>, so they can be serialized to/from JSON:</p>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let contract = parse_contract(&amp;icl_text)?;
+let json = serde_json::to_string_pretty(&amp;contract)?;
+let roundtrip: Contract = serde_json::from_str(&amp;json)?;
+assert_eq!(contract, roundtrip);
+<span class="boring">}</span></code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="implementation-guide"><a class="header" href="#implementation-guide">Implementation Guide</a></h1>
+<p>This guide is for developers who want to contribute to ICL Runtime or create alternative implementations.</p>
+<h2 id="conformance-requirements"><a class="header" href="#conformance-requirements">Conformance Requirements</a></h2>
+<p>Any ICL implementation <strong>must</strong>:</p>
+<ol>
+<li><strong>Parse</strong> all valid ICL contracts per the <a href="https://github.com/ICL-System/ICL-Spec/blob/main/grammar/icl.bnf">BNF grammar</a></li>
+<li><strong>Reject</strong> all invalid contracts with clear error messages</li>
+<li><strong>Normalize</strong> to the same canonical form as the reference implementation</li>
+<li><strong>Produce identical semantic hashes</strong> for equivalent contracts</li>
+<li><strong>Pass all conformance tests</strong> in <a href="https://github.com/ICL-System/ICL-Spec/tree/main/conformance">ICL-Spec/conformance/</a></li>
+</ol>
+<hr>
+<h2 id="determinism-checklist"><a class="header" href="#determinism-checklist">Determinism Checklist</a></h2>
+<p>Any ICL implementation must guarantee determinism. Here’s what to check:</p>
+<ul>
+<li><input disabled="" type="checkbox" checked=""> No random number generation (<code>rand</code>, <code>Math.random()</code>, etc.)</li>
+<li><input disabled="" type="checkbox" checked=""> No direct system time access in core logic</li>
+<li><input disabled="" type="checkbox" checked=""> <code>BTreeMap</code> / sorted maps instead of <code>HashMap</code> / unordered maps</li>
+<li><input disabled="" type="checkbox" checked=""> IEEE 754 floating point operations only</li>
+<li><input disabled="" type="checkbox" checked=""> No thread-dependent ordering</li>
+<li><input disabled="" type="checkbox" checked=""> No external I/O in core (all I/O at boundaries)</li>
+<li><input disabled="" type="checkbox" checked=""> 100-iteration determinism proof for every test path</li>
+</ul>
+<hr>
+<h2 id="building-from-source"><a class="header" href="#building-from-source">Building from Source</a></h2>
+<h3 id="prerequisites"><a class="header" href="#prerequisites">Prerequisites</a></h3>
+<ul>
+<li>Rust 1.75+ (<code>rustup install stable</code>)</li>
+<li>For Python binding: Python 3.8+, maturin</li>
+<li>For JS binding: wasm-pack, Node.js 16+</li>
+<li>For Go binding: Go 1.21+, cbindgen</li>
+</ul>
+<h3 id="build--test"><a class="header" href="#build--test">Build &amp; Test</a></h3>
+<pre><code class="language-bash">git clone https://github.com/ICL-System/ICL-Runtime.git
+cd ICL-Runtime
+cargo build --workspace
+cargo test --workspace
+</code></pre>
+<h3 id="build-all-bindings"><a class="header" href="#build-all-bindings">Build All Bindings</a></h3>
+<pre><code class="language-bash"># Python
+cd bindings/python &amp;&amp; pip install -e . &amp;&amp; pytest tests/
+
+# JavaScript
+cd bindings/javascript &amp;&amp; wasm-pack build --target nodejs &amp;&amp; node tests/test_icl.mjs
+
+# Go
+cd bindings/go/ffi &amp;&amp; cargo build --release
+cd bindings/go &amp;&amp; LD_LIBRARY_PATH=../../target/release go test -v
+</code></pre>
+<hr>
+<h2 id="project-structure"><a class="header" href="#project-structure">Project Structure</a></h2>
+<pre><code>ICL-Runtime/
+├── Cargo.toml              # Workspace root
+├── crates/
+│   ├── icl-core/           # Library crate (all logic)
+│   │   ├── Cargo.toml
+│   │   └── src/
+│   │       ├── lib.rs      # Public types + re-exports
+│   │       ├── parser/     # Tokenizer + AST + recursive descent
+│   │       ├── normalizer.rs
+│   │       ├── verifier.rs
+│   │       ├── executor.rs
+│   │       └── error.rs
+│   └── icl-cli/            # Binary crate (CLI)
+│       └── src/main.rs
+├── bindings/
+│   ├── python/             # PyO3 cdylib
+│   ├── javascript/         # wasm-bindgen cdylib (excluded from workspace)
+│   └── go/                 # cgo + cbindgen
+│       ├── ffi/            # Rust FFI layer (staticlib + cdylib)
+│       ├── icl.go          # Go wrapper
+│       └── icl_test.go
+└── tests/
+    ├── integration/
+    ├── conformance/
+    └── determinism/
+</code></pre>
+<hr>
+<h2 id="creating-a-new-language-binding"><a class="header" href="#creating-a-new-language-binding">Creating a New Language Binding</a></h2>
+<p>All bindings wrap the Rust core — they <strong>must not</strong> reimplement any logic.</p>
+<h3 id="steps"><a class="header" href="#steps">Steps</a></h3>
+<ol>
+<li>Create a new directory under <code>bindings/</code></li>
+<li>Add a thin FFI layer that calls <code>icl-core</code> functions</li>
+<li>Expose 5 functions: parse, normalize, verify, execute, semantic_hash</li>
+<li>Write tests that verify identical output to Rust</li>
+<li>Add 100-iteration determinism proofs</li>
+<li>Document installation and usage</li>
+</ol>
+<h3 id="function-signatures"><a class="header" href="#function-signatures">Function Signatures</a></h3>
+<p>Every binding should expose these function signatures (adapted to the target language):</p>
+<pre><code>parse_contract(icl_text: string) -&gt; string   // Returns JSON
+normalize(icl_text: string) -&gt; string        // Returns canonical ICL text
+verify(icl_text: string) -&gt; string           // Returns JSON diagnostics
+execute(icl_text: string, inputs: string) -&gt; string  // Returns JSON result
+semantic_hash(icl_text: string) -&gt; string    // Returns hex hash
+</code></pre>
+<p>All functions take ICL text as a string and return strings. Errors are either returned as error types (Go, Rust) or raised as exceptions (Python) or thrown (JavaScript).</p>
+<hr>
+<h2 id="contributing"><a class="header" href="#contributing">Contributing</a></h2>
+<ol>
+<li>Fork the repository</li>
+<li>Create a feature branch: <code>git checkout -b feat/my-feature</code></li>
+<li>Make changes with tests</li>
+<li>Run the full test suite: <code>cargo test --workspace</code></li>
+<li>Verify determinism: every new test should include a 100-iteration proof</li>
+<li>Submit a pull request</li>
+</ol>
+<p>See <a href="https://github.com/ICL-System/ICL-Runtime/blob/main/CONTRIBUTING.md">CONTRIBUTING.md</a> for detailed guidelines.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="cli-reference"><a class="header" href="#cli-reference">CLI Reference</a></h1>
+<p>The ICL CLI provides 9 commands for working with intent contracts.</p>
+<h2 id="installation"><a class="header" href="#installation">Installation</a></h2>
+<pre><code class="language-bash"># From source
+git clone https://github.com/ICL-System/ICL-Runtime.git
+cd ICL-Runtime
+cargo install --path crates/icl-cli
+</code></pre>
+<h2 id="global-options"><a class="header" href="#global-options">Global Options</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--quiet</code></td><td>Suppress non-error output (for CI usage)</td></tr>
+<tr><td><code>-h, --help</code></td><td>Print help</td></tr>
+<tr><td><code>-V, --version</code></td><td>Print version</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="icl-validate-file"><a class="header" href="#icl-validate-file"><code>icl validate &lt;file&gt;</code></a></h2>
+<p>Check syntax and types. Parses the contract and runs the verifier.</p>
+<pre><code class="language-bash">icl validate contract.icl
+# ✓ contract.icl is valid
+
+icl validate contract.icl --json
+# {"file":"contract.icl","valid":true,"errors":0,"warnings":2,"diagnostics":[...]}
+</code></pre>
+<p><strong>Options:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--json</code></td><td>Output results as JSON</td></tr>
+<tr><td><code>--quiet</code></td><td>Exit code only, no output</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Exit codes:</strong> <code>0</code> = valid, <code>1</code> = invalid, <code>2</code> = file error</p>
+<hr>
+<h2 id="icl-normalize-file"><a class="header" href="#icl-normalize-file"><code>icl normalize &lt;file&gt;</code></a></h2>
+<p>Output the canonical form. Sections are sorted alphabetically, fields are sorted within sections, comments are stripped, and the semantic hash is recomputed.</p>
+<pre><code class="language-bash">icl normalize contract.icl
+# Prints canonical form to stdout
+</code></pre>
+<p>Normalization is idempotent: <code>normalize(normalize(x)) == normalize(x)</code>.</p>
+<hr>
+<h2 id="icl-verify-file"><a class="header" href="#icl-verify-file"><code>icl verify &lt;file&gt;</code></a></h2>
+<p>Full verification — type checking, invariant consistency, determinism analysis, and coherence verification.</p>
+<pre><code class="language-bash">icl verify contract.icl
+# ✓ contract.icl verified successfully
+
+icl verify contract.icl --json
+# {"file":"contract.icl","verified":true,...}
+</code></pre>
+<p><strong>Options:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--json</code></td><td>Output results as JSON</td></tr>
+</tbody>
+</table>
+</div>
+<p>The verifier checks:</p>
+<ul>
+<li>All types are valid and consistent</li>
+<li>Invariants are satisfiable and non-contradictory</li>
+<li>Operations preserve invariants</li>
+<li>No randomness, system time, or external I/O in core logic</li>
+<li>Preconditions and postconditions are coherent</li>
+<li>Resource limits are feasible</li>
+</ul>
+<hr>
+<h2 id="icl-fmt-file"><a class="header" href="#icl-fmt-file"><code>icl fmt &lt;file&gt;</code></a></h2>
+<p>Format a contract to standard style (equivalent to normalize, written back to file or stdout).</p>
+<pre><code class="language-bash">icl fmt contract.icl
+# Prints formatted contract
+</code></pre>
+<hr>
+<h2 id="icl-hash-file"><a class="header" href="#icl-hash-file"><code>icl hash &lt;file&gt;</code></a></h2>
+<p>Compute the SHA-256 semantic hash of a contract.</p>
+<pre><code class="language-bash">icl hash contract.icl
+# 1f7dcf67d92b813f3cc0402781f023ea33c76dd7c2b6963531fe68bf9c032cb8
+</code></pre>
+<p>The hash is computed from the canonical (normalized) form. Two contracts with the same semantics produce the same hash, regardless of formatting or comments.</p>
+<hr>
+<h2 id="icl-diff-file_a-file_b"><a class="header" href="#icl-diff-file_a-file_b"><code>icl diff &lt;file_a&gt; &lt;file_b&gt;</code></a></h2>
+<p>Semantic diff between two contracts. Both contracts are normalized first, then compared field by field.</p>
+<pre><code class="language-bash">icl diff v1.icl v2.icl
+# --- v1.icl (canonical)
+# +++ v2.icl (canonical)
+#   Contract {
+#     Identity {
+# -     stable_id: "ic-v1-001",
+# +     stable_id: "ic-v2-001",
+#       ...
+</code></pre>
+<hr>
+<h2 id="icl-init-name"><a class="header" href="#icl-init-name"><code>icl init [name]</code></a></h2>
+<p>Scaffold a new ICL contract with all required sections.</p>
+<pre><code class="language-bash">icl init my-contract
+# ✓ created my-contract.icl
+
+icl init
+# ✓ created my-contract.icl  (default name)
+</code></pre>
+<p>The generated template includes all required sections with placeholder values — ready to fill in.</p>
+<hr>
+<h2 id="icl-execute-file---input-json"><a class="header" href="#icl-execute-file---input-json"><code>icl execute &lt;file&gt; --input &lt;json&gt;</code></a></h2>
+<p>Run a contract with JSON inputs in a sandboxed environment.</p>
+<pre><code class="language-bash">icl execute contract.icl --input '{"operation":"echo","inputs":{"message":"Hello"}}'
+# ✓ contract.icl executed successfully
+#   Operations: 1
+#   Provenance entries: 1
+</code></pre>
+<p><strong>Options:</strong></p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Option</th><th>Description</th></tr>
+</thead>
+<tbody>
+<tr><td><code>--input &lt;json&gt;</code></td><td>JSON input with <code>operation</code> and <code>inputs</code> fields (required)</td></tr>
+<tr><td><code>--json</code></td><td>Output execution result as JSON</td></tr>
+</tbody>
+</table>
+</div>
+<p>The input JSON must contain:</p>
+<ul>
+<li><code>"operation"</code> — name of the operation to execute</li>
+<li><code>"inputs"</code> — parameters matching the operation’s parameter spec</li>
+</ul>
+<p>Execution enforces resource limits (memory, time, state size) and logs all state changes in the provenance log.</p>
+<hr>
+<h2 id="icl-version"><a class="header" href="#icl-version"><code>icl version</code></a></h2>
+<p>Show version information.</p>
+<pre><code class="language-bash">icl version
+# icl 0.1.0 (icl-core 0.1.0)
+# Phases complete: Parser, Normalizer, Verifier, CLI
+</code></pre>
+<hr>
+<h2 id="exit-codes"><a class="header" href="#exit-codes">Exit Codes</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Code</th><th>Meaning</th></tr>
+</thead>
+<tbody>
+<tr><td>0</td><td>Success</td></tr>
+<tr><td>1</td><td>Validation or verification failure</td></tr>
+<tr><td>2</td><td>File not found, I/O error, or execution error</td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="ci-integration"><a class="header" href="#ci-integration">CI Integration</a></h2>
+<p>Use <code>--quiet</code> and <code>--json</code> for CI pipelines:</p>
+<pre><code class="language-bash"># Fail the build if any contract is invalid
+icl validate contracts/*.icl --quiet
+
+# Get machine-readable results
+icl verify contract.icl --json | jq '.verified'
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="language-bindings"><a class="header" href="#language-bindings">Language Bindings</a></h1>
+<p>All language bindings wrap the same Rust core (<code>icl-core</code>). They never reimplement any logic — only type conversion and FFI glue.</p>
+<p>Every binding exposes the same 5 functions:</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Function</th><th>Python</th><th>JavaScript</th><th>Go</th></tr>
+</thead>
+<tbody>
+<tr><td>Parse</td><td><code>parse_contract(text)</code></td><td><code>parseContract(text)</code></td><td><code>ParseContract(text)</code></td></tr>
+<tr><td>Normalize</td><td><code>normalize(text)</code></td><td><code>normalize(text)</code></td><td><code>Normalize(text)</code></td></tr>
+<tr><td>Verify</td><td><code>verify(text)</code></td><td><code>verify(text)</code></td><td><code>Verify(text)</code></td></tr>
+<tr><td>Execute</td><td><code>execute(text, input)</code></td><td><code>execute(text, input)</code></td><td><code>Execute(text, input)</code></td></tr>
+<tr><td>Hash</td><td><code>semantic_hash(text)</code></td><td><code>semanticHash(text)</code></td><td><code>SemanticHash(text)</code></td></tr>
+</tbody>
+</table>
+</div>
+<hr>
+<h2 id="python-pyo3--maturin"><a class="header" href="#python-pyo3--maturin">Python (PyO3 + maturin)</a></h2>
+<p><strong>Package:</strong> <code>icl-runtime</code> on <a href="https://test.pypi.org/project/icl-runtime/">test.pypi.org</a></p>
+<h3 id="install"><a class="header" href="#install">Install</a></h3>
+<pre><code class="language-bash"># From test.pypi.org (current)
+pip install --index-url https://test.pypi.org/simple/ icl-runtime
+
+# From local build
+cd ICL-Runtime/bindings/python
+pip install -e .
+</code></pre>
+<h3 id="usage"><a class="header" href="#usage">Usage</a></h3>
+<pre><code class="language-python">import icl
+
+# Parse a contract
+result = icl.parse_contract("""
+Contract {
+  Identity { stable_id: "test", version: 1, ... }
+  ...
+}
+""")
+print(result)  # JSON string
+
+# Normalize to canonical form
+canonical = icl.normalize(contract_text)
+
+# Verify (returns JSON diagnostics)
+diagnostics = icl.verify(contract_text)
+
+# Execute with inputs
+output = icl.execute(contract_text, '{"operation":"echo","inputs":{"message":"Hi"}}')
+
+# Compute semantic hash
+hash_value = icl.semantic_hash(contract_text)
+print(hash_value)  # "1f7dcf67..."
+</code></pre>
+<h3 id="type-stubs"><a class="header" href="#type-stubs">Type Stubs</a></h3>
+<p>Python type stubs (<code>.pyi</code>) are included for IDE autocompletion:</p>
+<pre><code class="language-python">def parse_contract(icl_text: str) -&gt; str: ...
+def normalize(icl_text: str) -&gt; str: ...
+def verify(icl_text: str) -&gt; str: ...
+def execute(icl_text: str, inputs_json: str) -&gt; str: ...
+def semantic_hash(icl_text: str) -&gt; str: ...
+</code></pre>
+<hr>
+<h2 id="javascript--typescript-wasm-pack"><a class="header" href="#javascript--typescript-wasm-pack">JavaScript / TypeScript (wasm-pack)</a></h2>
+<p><strong>Package:</strong> <code>icl-wasm</code></p>
+<h3 id="install-1"><a class="header" href="#install-1">Install</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/javascript
+wasm-pack build --target nodejs
+</code></pre>
+<p>The built package is in <code>pkg/</code>.</p>
+<h3 id="usage-nodejs"><a class="header" href="#usage-nodejs">Usage (Node.js)</a></h3>
+<pre><code class="language-javascript">const icl = require('./pkg/icl_wasm.js');
+
+// Parse
+const parsed = icl.parseContract(contractText);
+
+// Normalize
+const canonical = icl.normalize(contractText);
+
+// Verify
+const diagnostics = icl.verify(contractText);
+
+// Execute
+const result = icl.execute(contractText, '{"operation":"echo","inputs":{"message":"Hi"}}');
+
+// Hash
+const hash = icl.semanticHash(contractText);
+</code></pre>
+<h3 id="typescript"><a class="header" href="#typescript">TypeScript</a></h3>
+<p>TypeScript definitions (<code>.d.ts</code>) are generated automatically:</p>
+<pre><code class="language-typescript">export function parseContract(icl_text: string): string;
+export function normalize(icl_text: string): string;
+export function verify(icl_text: string): string;
+export function execute(icl_text: string, inputs_json: string): string;
+export function semanticHash(icl_text: string): string;
+</code></pre>
+<h3 id="browser-usage"><a class="header" href="#browser-usage">Browser Usage</a></h3>
+<p>Build for the browser with:</p>
+<pre><code class="language-bash">wasm-pack build --target web
+</code></pre>
+<hr>
+<h2 id="go-cgo--cbindgen"><a class="header" href="#go-cgo--cbindgen">Go (cgo + cbindgen)</a></h2>
+<p><strong>Module:</strong> <code>github.com/ICL-System/ICL-Runtime/bindings/go</code></p>
+<h3 id="install-2"><a class="header" href="#install-2">Install</a></h3>
+<p>The Go binding requires the Rust FFI library to be built first:</p>
+<pre><code class="language-bash">cd ICL-Runtime
+cargo build --release -p icl-ffi
+</code></pre>
+<h3 id="usage-1"><a class="header" href="#usage-1">Usage</a></h3>
+<pre><code class="language-go">package main
+
+import (
+    icl "github.com/ICL-System/ICL-Runtime/bindings/go"
+    "fmt"
+    "log"
+)
+
+func main() {
+    contract := `Contract { ... }`
+
+    // Parse
+    result, err := icl.ParseContract(contract)
+    if err != nil {
+        log.Fatal(err)
+    }
+    fmt.Println(result)
+
+    // Normalize
+    canonical, err := icl.Normalize(contract)
+    if err != nil { log.Fatal(err) }
+
+    // Verify
+    diagnostics, err := icl.Verify(contract)
+    if err != nil { log.Fatal(err) }
+
+    // Execute
+    output, err := icl.Execute(contract, `{"operation":"echo","inputs":{"message":"Hi"}}`)
+    if err != nil { log.Fatal(err) }
+
+    // Hash
+    hash, err := icl.SemanticHash(contract)
+    if err != nil { log.Fatal(err) }
+
+    fmt.Println(canonical, diagnostics, output, hash)
+}
+</code></pre>
+<h3 id="running-tests"><a class="header" href="#running-tests">Running Tests</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/go
+LD_LIBRARY_PATH=../../target/release go test -v
+</code></pre>
+<hr>
+<h2 id="rust-native"><a class="header" href="#rust-native">Rust (Native)</a></h2>
+<p>Use <code>icl-core</code> directly as a Rust dependency:</p>
+<pre><code class="language-toml"># Cargo.toml
+[dependencies]
+icl-core = { path = "crates/icl-core" }
+</code></pre>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use icl_core::parser::parse_contract;
+use icl_core::normalizer;
+use icl_core::verifier::verify_contract;
+use icl_core::executor::execute_contract;
+
+let contract = parse_contract(&amp;icl_text)?;
+verify_contract(&amp;contract)?;
+let canonical = normalizer::normalize(&amp;icl_text)?;
+let hash = normalizer::semantic_hash(&amp;icl_text)?;
+<span class="boring">}</span></code></pre>
+<hr>
+<h2 id="cross-language-determinism"><a class="header" href="#cross-language-determinism">Cross-Language Determinism</a></h2>
+<p>All bindings are tested with 100-iteration determinism proofs. Given the same ICL text:</p>
+<ul>
+<li>Python <code>normalize()</code> == Rust <code>normalize()</code> == JS <code>normalize()</code> == Go <code>Normalize()</code></li>
+<li>Python <code>semantic_hash()</code> == Rust <code>semantic_hash()</code> == JS <code>semanticHash()</code> == Go <code>SemanticHash()</code></li>
+<li>Python <code>execute()</code> == Rust <code>execute_contract()</code> == JS <code>execute()</code> == Go <code>Execute()</code></li>
+</ul>
+<p>This is guaranteed because all bindings call through to the same compiled Rust code.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing-guide"><a class="header" href="#testing-guide">Testing Guide</a></h1>
+<p>ICL has 268 tests across Rust, Python, JavaScript, and Go. Every test proves determinism.</p>
+<h2 id="running-tests-1"><a class="header" href="#running-tests-1">Running Tests</a></h2>
+<h3 id="rust-core--cli"><a class="header" href="#rust-core--cli">Rust (core + CLI)</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime
+cargo test --workspace
+# 175 tests passing
+</code></pre>
+<h3 id="python-1"><a class="header" href="#python-1">Python</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/python
+pip install -e .
+pytest tests/
+# 18 tests passing
+</code></pre>
+<h3 id="javascript"><a class="header" href="#javascript">JavaScript</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/javascript
+wasm-pack build --target nodejs
+node tests/test_icl.mjs
+# 31 tests passing
+</code></pre>
+<h3 id="go-1"><a class="header" href="#go-1">Go</a></h3>
+<pre><code class="language-bash">cd ICL-Runtime/bindings/go
+LD_LIBRARY_PATH=../../target/release go test -v
+# 16 tests passing
+</code></pre>
+<hr>
+<h2 id="test-categories"><a class="header" href="#test-categories">Test Categories</a></h2>
+<h3 id="1-unit-tests-in-crate"><a class="header" href="#1-unit-tests-in-crate">1. Unit Tests (in-crate)</a></h3>
+<p>Located alongside source code in <code>#[cfg(test)]</code> modules. Each module has its own tests.</p>
+<pre><code class="language-bash">cargo test -p icl-core              # All core tests
+cargo test -p icl-core parser       # Parser tests only
+cargo test -p icl-core normalizer   # Normalizer tests only
+cargo test -p icl-core verifier     # Verifier tests only
+cargo test -p icl-core executor     # Executor tests only
+</code></pre>
+<h3 id="2-integration-tests"><a class="header" href="#2-integration-tests">2. Integration Tests</a></h3>
+<p>Located in <code>tests/integration/</code>. Test cross-module behavior — parsing a contract, then normalizing, verifying, and executing it.</p>
+<pre><code class="language-bash">cargo test --test '*'
+</code></pre>
+<h3 id="3-conformance-tests"><a class="header" href="#3-conformance-tests">3. Conformance Tests</a></h3>
+<p>Located in <code>tests/conformance/</code>. Validate the runtime against the <a href="https://github.com/ICL-System/ICL-Spec/tree/main/conformance">ICL-Spec conformance suite</a>.</p>
+<ul>
+<li><code>conformance/valid/</code> — contracts that must parse successfully</li>
+<li><code>conformance/invalid/</code> — contracts that must be rejected with clear errors</li>
+<li><code>conformance/normalization/</code> — input/expected pairs for canonical form</li>
+</ul>
+<pre><code class="language-bash">cargo test conformance
+</code></pre>
+<h3 id="4-determinism-tests"><a class="header" href="#4-determinism-tests">4. Determinism Tests</a></h3>
+<p>Located in <code>tests/determinism/</code>. Every test runs 100 iterations and verifies identical output.</p>
+<pre><code class="language-bash">cargo test determinism
+</code></pre>
+<hr>
+<h2 id="writing-tests"><a class="header" href="#writing-tests">Writing Tests</a></h2>
+<h3 id="rule-1-every-test-must-prove-determinism"><a class="header" href="#rule-1-every-test-must-prove-determinism">Rule 1: Every Test Must Prove Determinism</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[test]
+fn test_my_feature() {
+    let input = "...";
+    let first_result = my_function(input);
+
+    for _ in 0..100 {
+        assert_eq!(my_function(input), first_result);
+    }
+}
+<span class="boring">}</span></code></pre>
+<h3 id="rule-2-no-randomness-no-system-time"><a class="header" href="#rule-2-no-randomness-no-system-time">Rule 2: No Randomness, No System Time</a></h3>
+<p>Tests must not depend on:</p>
+<ul>
+<li>Random number generators</li>
+<li>Current system time</li>
+<li>File system ordering</li>
+<li>Thread scheduling</li>
+</ul>
+<h3 id="rule-3-test-both-valid-and-invalid-inputs"><a class="header" href="#rule-3-test-both-valid-and-invalid-inputs">Rule 3: Test Both Valid and Invalid Inputs</a></h3>
+<pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[test]
+fn test_rejects_invalid_confidence() {
+    let input = r#"Contract {
+      ...
+      PurposeStatement { confidence_level: 1.5 }
+      ...
+    }"#;
+    assert!(parse_contract(input).is_err());
+}
+<span class="boring">}</span></code></pre>
+<h3 id="rule-4-conformance-fixtures"><a class="header" href="#rule-4-conformance-fixtures">Rule 4: Conformance Fixtures</a></h3>
+<p>When adding parser/normalizer features, add matching fixtures to ICL-Spec:</p>
+<ul>
+<li><code>conformance/valid/</code> — must parse</li>
+<li><code>conformance/invalid/</code> — must be rejected</li>
+<li><code>conformance/normalization/</code> — input→canonical pairs</li>
+</ul>
+<hr>
+<h2 id="cross-language-determinism-1"><a class="header" href="#cross-language-determinism-1">Cross-Language Determinism</a></h2>
+<p>All language bindings must produce identical results to the Rust core. The binding test suites include 100-iteration determinism proofs:</p>
+<p><strong>Python:</strong></p>
+<pre><code class="language-python">def test_normalize_determinism():
+    first = icl.normalize(contract_text)
+    for _ in range(100):
+        assert icl.normalize(contract_text) == first
+</code></pre>
+<p><strong>JavaScript:</strong></p>
+<pre><code class="language-javascript">const first = icl.normalize(contractText);
+for (let i = 0; i &lt; 100; i++) {
+    assert.strictEqual(icl.normalize(contractText), first);
+}
+</code></pre>
+<p><strong>Go:</strong></p>
+<pre><code class="language-go">first, _ := icl.Normalize(contract)
+for i := 0; i &lt; 100; i++ {
+    result, _ := icl.Normalize(contract)
+    if result != first {
+        t.Fatalf("Non-determinism at iteration %d", i)
+    }
+}
+</code></pre>
+<hr>
+<h2 id="test-counts-by-component"><a class="header" href="#test-counts-by-component">Test Counts by Component</a></h2>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>Component</th><th>Tests</th><th>Includes Determinism Proof</th></tr>
+</thead>
+<tbody>
+<tr><td>Parser (tokenizer + AST + recursive descent)</td><td>~80</td><td>Yes</td></tr>
+<tr><td>Normalizer (canonical form + hashing)</td><td>~30</td><td>Yes (idempotence + 100-iter)</td></tr>
+<tr><td>Verifier (types + invariants + determinism + coherence)</td><td>~40</td><td>Yes</td></tr>
+<tr><td>Executor (sandbox + provenance)</td><td>~20</td><td>Yes</td></tr>
+<tr><td>CLI (all 9 commands)</td><td>~15</td><td>—</td></tr>
+<tr><td>Python binding</td><td>18</td><td>Yes (100-iter)</td></tr>
+<tr><td>JavaScript binding</td><td>31</td><td>Yes (100-iter)</td></tr>
+<tr><td>Go binding</td><td>16</td><td>Yes (100-iter)</td></tr>
+<tr><td><strong>Total</strong></td><td><strong>~268</strong></td><td></td></tr>
+</tbody>
+</table>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>

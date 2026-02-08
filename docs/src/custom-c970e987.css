@@ -1,0 +1,70 @@
+/* ICL Documentation — Custom Theme */
+
+:root {
+    --icl-accent: #2563eb;
+    --icl-accent-light: #3b82f6;
+}
+
+/* Sidebar styling */
+.sidebar .sidebar-scrollbox {
+    padding-top: 1rem;
+}
+
+/* Code blocks */
+.hljs {
+    border-radius: 6px;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1em 0;
+}
+
+table th {
+    background-color: var(--table-header-bg);
+    font-weight: 600;
+    text-align: left;
+    padding: 0.5em 1em;
+}
+
+table td {
+    padding: 0.5em 1em;
+}
+
+/* Admonitions / blockquotes */
+blockquote {
+    border-left: 4px solid var(--icl-accent);
+    margin: 1em 0;
+    padding: 0.5em 1em;
+    background-color: var(--quote-bg);
+    border-radius: 0 4px 4px 0;
+}
+
+/* Status badges */
+.badge {
+    display: inline-block;
+    padding: 0.15em 0.6em;
+    border-radius: 3px;
+    font-size: 0.85em;
+    font-weight: 600;
+}
+
+.badge-complete {
+    background-color: #dcfce7;
+    color: #166534;
+}
+
+.badge-active {
+    background-color: #dbeafe;
+    color: #1e40af;
+}
+
+/* Pipeline diagram in architecture */
+pre.pipeline {
+    background-color: var(--code-bg);
+    padding: 1em;
+    border-radius: 6px;
+    line-height: 1.6;
+}
