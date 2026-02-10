@@ -54,12 +54,6 @@ Contract {
 
 ---
 
-## The Golden Rule
-
-> **If a violation leads to a lawsuit, death, or bankruptcy → use ICL.**
->
-> **If a violation leads to a user complaint or bad UX → guardrails are fine.**
-
 ---
 
 ## When to Use ICL
