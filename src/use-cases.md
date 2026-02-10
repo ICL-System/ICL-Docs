@@ -54,8 +54,6 @@ Contract {
 
 ---
 
----
-
 ## When to Use ICL
 
 ICL is for **hard constraints with real consequences** — safety-critical systems, financial controls, regulatory compliance, and autonomous agents that take actions in the real world.
