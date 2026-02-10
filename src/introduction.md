@@ -23,6 +23,19 @@ Every AI system, API, and automation tool has implicit contracts. Today, these l
 
 ICL replaces all of these with a **single, machine-checkable, deterministic** format. Given the same contract and the same input, every ICL implementation produces identical output — always.
 
+## How is ICL Different from Guardrails?
+
+| | System Prompts | Guardrails | **ICL** |
+|---|---|---|---|
+| **What it is** | Natural language instructions | Runtime filters | Formal, verified contracts |
+| **Enforcement** | LLM interprets (may ignore) | Probabilistic | **Mathematical proof** |
+| **Analogy** | "Please don't" | Smoke detector | **Fireproof wall** |
+| **When it fails** | Silently does wrong thing | Catches some | **Blocks execution, logs why** |
+
+**Rule of thumb:** If a violation leads to a lawsuit, death, or bankruptcy — use ICL. If it leads to a user complaint — guardrails are fine.
+
+See the full [ICL vs Guardrails & System Prompts](use-cases.md) page for 50+ real-world examples.
+
 ## Quick Example
 
 ```

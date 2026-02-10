@@ -1,6 +1,7 @@
 # Summary
 
 [Introduction](introduction.md)
+- [ICL vs Guardrails & System Prompts](use-cases.md)
 
 # Getting Started
 
