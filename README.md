@@ -1,6 +1,6 @@
 # ICL Documentation
 
-> **Status: Phases 0–9 Complete**
+> **Status: Phases 0–10 Complete**
 >
 > Documentation website for the [Intent Contract Language (ICL)](https://github.com/ICL-System/ICL-Spec) ecosystem. Built with [mdBook](https://rust-lang.github.io/mdBook/).
 

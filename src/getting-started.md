@@ -193,24 +193,42 @@ hash_val = icl.semantic_hash(open("hello.icl").read())
 
 ## Using from JavaScript
 
+Works with Node.js (CJS or ESM), bundlers (Vite/Webpack/Rollup), and browsers.
+
 ```javascript
-const icl = require('icl-runtime');
+// Node.js (CommonJS)
+const { parseContract, normalize, verify, execute, semanticHash } = require('icl-runtime');
+
+// Node.js (ES Modules) or Bundlers (Vite, Webpack, Rollup)
+import { parseContract, normalize, verify, execute, semanticHash } from 'icl-runtime';
 
 // Parse
-const result = icl.parseContract(contractText);
+const result = parseContract(contractText);
 
 // Normalize
-const canonical = icl.normalize(contractText);
+const canonical = normalize(contractText);
 
 // Verify
-const issues = icl.verify(contractText);
+const issues = verify(contractText);
 
 // Execute
-const output = icl.execute(contractText, '{"operation":"echo","inputs":{"message":"Hello"}}');
+const output = execute(contractText, '{"operation":"echo","inputs":{"message":"Hello"}}');
 
 // Semantic hash
-const hash = icl.semanticHash(contractText);
+const hash = semanticHash(contractText);
 ```
+
+For browsers, use the `/web` sub-path export:
+
+```html
+<script type="module">
+  import init, { parseContract } from 'icl-runtime/web';
+  await init();  // must call init() first
+  const result = parseContract(contractText);
+</script>
+```
+
+See [Integration Overview](integrations/overview.md) for detailed target-specific docs.
 
 ## Using from Go
 

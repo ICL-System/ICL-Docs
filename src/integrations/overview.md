@@ -70,13 +70,15 @@ def semantic_hash(icl_text: str) -> str: ...
 
 **Package:** `icl-runtime` on [npm](https://www.npmjs.com/package/icl-runtime)
 
+Works out of the box in **Node.js**, **bundlers** (Vite, Webpack, Rollup), and **plain browsers** — zero manual WASM copying. The correct target is selected automatically via [conditional exports](https://nodejs.org/api/packages.html#conditional-exports).
+
 ### Install
 
 ```bash
 npm install icl-runtime
 ```
 
-### Usage (Node.js)
+### Usage (Node.js — CommonJS)
 
 ```javascript
 const icl = require('icl-runtime');
@@ -97,9 +99,43 @@ const result = icl.execute(contractText, '{"operation":"echo","inputs":{"message
 const hash = icl.semanticHash(contractText);
 ```
 
+### Usage (Node.js — ES Modules)
+
+```javascript
+import { parseContract, normalize, verify, execute, semanticHash } from 'icl-runtime';
+
+const ast = JSON.parse(parseContract(contractText));
+const hash = semanticHash(contractText);
+```
+
+### Usage (Bundlers — Vite, Webpack, Rollup)
+
+```javascript
+import { parseContract, normalize, verify, execute, semanticHash } from 'icl-runtime';
+
+// Same API — bundler target is selected automatically via "exports" → "import"
+const ast = JSON.parse(parseContract(contractText));
+```
+
+> **Vite users**: Add `vite-plugin-wasm` to your Vite config for WASM ESM integration support.
+
+### Usage (Browser — Script Tag)
+
+```html
+<script type="module">
+  import init, { parseContract } from 'icl-runtime/web';
+
+  // Must call init() first — loads the WASM binary via fetch()
+  await init();
+
+  const ast = JSON.parse(parseContract(contractText));
+  console.log(ast);
+</script>
+```
+
 ### TypeScript
 
-TypeScript definitions (`.d.ts`) are generated automatically:
+TypeScript definitions (`.d.ts`) are included — no `@types` package needed:
 
 ```typescript
 export function parseContract(icl_text: string): string;
@@ -109,13 +145,17 @@ export function execute(icl_text: string, inputs_json: string): string;
 export function semanticHash(icl_text: string): string;
 ```
 
-### Browser Usage
+### How Target Selection Works
 
-Build for the browser with:
+The npm package includes 3 pre-built WASM targets:
 
-```bash
-wasm-pack build --target web
-```
+| Target | Loaded When | WASM Loading |
+|--------|-------------|--------------|
+| `dist/nodejs/` | `require()` or `import` in Node.js | `fs.readFileSync` (sync) |
+| `dist/bundler/` | `import` in Vite/Webpack/Rollup | Bundler handles `.wasm` |
+| `dist/web/` | `import from 'icl-runtime/web'` | `fetch()` + `WebAssembly.instantiate` |
+
+No manual copying of `.wasm` files is needed — each target's glue code loads the WASM binary from the correct relative path.
 
 ---
 

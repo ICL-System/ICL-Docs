@@ -177,7 +177,7 @@ Show version information.
 
 ```bash
 icl-cli version
-# icl-cli 0.1.2 (icl-core 0.1.2)
+# icl-cli 0.1.3 (icl-core 0.1.3)
 # Phases complete: Parser, Normalizer, Verifier, Executor, CLI, Bindings, CI/CD, Conformance
 ```
 
