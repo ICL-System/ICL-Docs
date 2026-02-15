@@ -1,5 +1,7 @@
 # ICL Documentation
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 > **Status: Phases 0–10 Complete**
 >
 > Documentation website for the [Intent Contract Language (ICL)](https://github.com/ICL-System/ICL-Spec) ecosystem. Built with [mdBook](https://rust-lang.github.io/mdBook/).
